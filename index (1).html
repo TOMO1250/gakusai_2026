@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#172554">
+  <title>学祭ゲーム作品展示</title>
+  <style>
+    :root {font-family: system-ui,-apple-system,"Noto Sans JP",sans-serif;color:#172033;background:#f2f5fb}
+    *{box-sizing:border-box}body{margin:0}header{background:linear-gradient(120deg,#172554,#4338ca);color:white;padding:46px 20px;text-align:center}
+    header h1{font-size:clamp(1.7rem,5vw,2.8rem);margin:0 0 10px;letter-spacing:.06em}header p{margin:0;color:#e0e7ff}
+    main{max-width:800px;margin:28px auto;padding:0 18px 40px}.toolbar{display:flex;gap:10px;align-items:center;margin-bottom:20px;flex-wrap:wrap}
+    input{flex:1;min-width:180px;padding:13px 15px;border:1px solid #cbd5e1;border-radius:12px;font-size:1rem}#count{color:#64748b;font-size:.9rem}
+    #games{display:grid;gap:18px}.game{background:white;border:1px solid #e2e8f0;border-radius:17px;padding:22px;box-shadow:0 5px 18px #1e293b0d}
+    .heading{display:flex;gap:14px;align-items:center}.emoji{width:64px;height:64px;display:grid;place-items:center;background:#eef2ff;border-radius:14px;font-size:2rem;flex-shrink:0}
+    h2{margin:0 0 6px;font-size:1.25rem}.author{margin:0;color:#475569}.genre{display:inline-block;background:#e0e7ff;color:#3730a3;border-radius:100px;padding:4px 11px;font-size:.82rem;margin-top:12px}
+    .url{display:block;color:#475569;overflow-wrap:anywhere;font-size:.9rem;margin:16px 0 12px}.actions{display:flex;gap:10px;flex-wrap:wrap}
+    a.play,button.copy{display:inline-block;border:0;border-radius:10px;padding:12px 18px;font-size:1rem;font-weight:700;cursor:pointer;text-decoration:none}
+    a.play{background:#2563eb;color:white}a.play:hover{background:#1d4ed8}button.copy{background:#e2e8f0;color:#334155}button.copy:hover{background:#cbd5e1}
+    .notice{background:#fff7ed;border:1px solid #fed7aa;padding:13px 15px;border-radius:10px;color:#9a3412;margin-bottom:18px;font-size:.9rem}
+    footer{text-align:center;color:#64748b;font-size:.85rem;padding:0 20px 35px}@media(max-width:480px){.game{padding:16px}.emoji{width:52px;height:52px}}
+  </style>
+</head>
+<body>
+<header><h1>🎮 GAME EXHIBITION</h1><p>学祭 サークル作品展示 ｜ 気になるゲームを選んで遊ぼう！</p></header>
+<main>
+  <div class="notice">これはテスト用サイトです。作品名・作者名・URLはサンプルです。実際の展示前に書き換えてください。</div>
+  <div class="toolbar"><input id="search" type="search" placeholder="作品名・作者名・ジャンルで検索" aria-label="作品を検索"><span id="count"></span></div>
+  <section id="games" aria-label="作品一覧"></section>
+</main>
+<footer>サークル作品展示 ｜ ゲームのプレイ後はこのタブに戻ってください</footer>
+<script>
+// ★ここを編集：各作品の title（作品名）、author（作者）、url（unityroom URL）、genre、emoji
+const games = [
+  { title: "スペースシューター", author: "山田 太郎", genre: "シューティング", emoji: "🚀", url: "https://unityroom.com/games/example1" },
+  { title: "迷宮からの脱出", author: "佐藤 花子", genre: "謎解き", emoji: "🗝️", url: "https://unityroom.com/games/example2" },
+  { title: "ねこの大冒険", author: "鈴木 一郎", genre: "アクション", emoji: "🐱", url: "https://unityroom.com/games/example3" },
+  { title: "星空パズル", author: "田中 美咲", genre: "パズル", emoji: "⭐", url: "https://unityroom.com/games/example4" },
+  { title: "ドットレーサー", author: "高橋 健", genre: "レース", emoji: "🏎️", url: "https://unityroom.com/games/example5" },
+  { title: "おばけ屋敷", author: "伊藤 葵", genre: "ホラー", emoji: "👻", url: "https://unityroom.com/games/example6" }
+];
+const list = document.getElementById('games');
+const count = document.getElementById('count');
+const search = document.getElementById('search');
+function render(){
+  const q=search.value.trim().toLocaleLowerCase();
+  const found=games.filter(g=>[g.title,g.author,g.genre].some(s=>s.toLocaleLowerCase().includes(q)));
+  count.textContent=`${found.length}作品`;
+  list.replaceChildren();
+  if(!found.length){const p=document.createElement('p');p.textContent='該当する作品がありません。';list.append(p);return;}
+  for(const g of found){
+    const article=document.createElement('article');article.className='game';
+    const heading=document.createElement('div');heading.className='heading';
+    const emoji=document.createElement('div');emoji.className='emoji';emoji.textContent=g.emoji;
+    const info=document.createElement('div');const title=document.createElement('h2');title.textContent=g.title;
+    const author=document.createElement('p');author.className='author';author.textContent=`作者：${g.author}`;info.append(title,author);heading.append(emoji,info);
+    const genre=document.createElement('span');genre.className='genre';genre.textContent=g.genre;
+    const url=document.createElement('span');url.className='url';url.textContent=g.url;
+    const actions=document.createElement('div');actions.className='actions';
+    const play=document.createElement('a');play.className='play';play.textContent='ゲームをプレイ →';
+    const valid=/^https:\/\/unityroom\.com\/games\/[a-zA-Z0-9_-]+\/?$/.test(g.url)&&!g.url.includes('/example');
+    if(valid){play.href=g.url;play.target='_blank';play.rel='noopener noreferrer'}
+    else{play.removeAttribute('href');play.style.background='#94a3b8';play.textContent='テスト用URL（未設定）';play.setAttribute('aria-disabled','true')}
+    const copy=document.createElement('button');copy.className='copy';copy.type='button';copy.textContent='URLをコピー';
+    copy.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(g.url);copy.textContent='コピーしました';setTimeout(()=>copy.textContent='URLをコピー',1600)}catch{window.prompt('URLをコピーしてください',g.url)}});
+    actions.append(play,copy);article.append(heading,genre,url,actions);list.append(article);
+  }
+}
+search.addEventListener('input',render);render();
+</script>
+</body>
+</html>
