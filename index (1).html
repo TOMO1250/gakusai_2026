@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#172554">
-  <title>学祭ゲーム作品展示</title>
+  <title>学祭 サークル作品展示</title>
 
   <style>
     :root {
@@ -41,10 +41,48 @@
     }
 
     main {
-      max-width:800px;
+      max-width:900px;
       margin:28px auto;
       padding:0 18px 40px;
     }
+
+    /* =========================
+       カテゴリボタン
+    ========================= */
+
+    .category-menu {
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:12px;
+      margin-bottom:28px;
+    }
+
+    .category-button {
+      border:2px solid #c7d2fe;
+      background:white;
+      color:#3730a3;
+      border-radius:14px;
+      padding:16px 8px;
+      font-size:1rem;
+      font-weight:700;
+      cursor:pointer;
+      transition:.2s;
+    }
+
+    .category-button:hover {
+      background:#eef2ff;
+      transform:translateY(-2px);
+    }
+
+    .category-button.active {
+      background:#4338ca;
+      border-color:#4338ca;
+      color:white;
+    }
+
+    /* =========================
+       検索
+    ========================= */
 
     .toolbar {
       display:flex;
@@ -68,6 +106,10 @@
       font-size:.9rem;
     }
 
+    /* =========================
+       ゲーム
+    ========================= */
+
     #games {
       display:grid;
       gap:18px;
@@ -87,7 +129,6 @@
       align-items:center;
     }
 
-    /* ゲーム画像 */
     .game-image {
       width:100px;
       height:100px;
@@ -126,11 +167,6 @@
       text-decoration:underline;
     }
 
-    .url:hover {
-      color:#1d4ed8;
-    }
-
-    /* コメント */
     .comment-area {
       margin-top:15px;
       padding:14px 16px;
@@ -146,7 +182,6 @@
       white-space:pre-wrap;
     }
 
-    /* 最初は3行だけ */
     .comment.collapsed {
       display:-webkit-box;
       -webkit-box-orient:vertical;
@@ -164,18 +199,156 @@
       font-size:.9rem;
     }
 
-    .more-button:hover {
-      text-decoration:underline;
+    /* =========================
+       音楽・動画
+    ========================= */
+
+    .media-list {
+      display:grid;
+      gap:18px;
     }
 
-    .notice {
-      background:#fff7ed;
-      border:1px solid #fed7aa;
-      padding:13px 15px;
-      border-radius:10px;
-      color:#9a3412;
-      margin-bottom:18px;
+    .media-card {
+      background:white;
+      border:1px solid #e2e8f0;
+      border-radius:17px;
+      padding:22px;
+      box-shadow:0 5px 18px #1e293b0d;
+    }
+
+    .media-card h2 {
+      margin-bottom:7px;
+    }
+
+    .media-card audio {
+      width:100%;
+      margin-top:16px;
+    }
+
+    .media-card video {
+      display:block;
+      width:100%;
+      max-height:500px;
+      margin-top:16px;
+      border-radius:12px;
+      background:black;
+    }
+
+    /* =========================
+       イラスト
+    ========================= */
+
+    .illustration-grid {
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:18px;
+    }
+
+    .illustration-card {
+      background:white;
+      border:1px solid #e2e8f0;
+      border-radius:15px;
+      overflow:hidden;
+      box-shadow:0 5px 18px #1e293b0d;
+    }
+
+    .illustration-card img {
+      display:block;
+      width:100%;
+      aspect-ratio:1 / 1;
+      object-fit:cover;
+      cursor:pointer;
+      transition:.2s;
+    }
+
+    .illustration-card img:hover {
+      transform:scale(1.03);
+    }
+
+    .illustration-info {
+      padding:12px;
+      text-align:center;
+    }
+
+    .illustration-title {
+      margin:0 0 4px;
+      font-weight:700;
+    }
+
+    .illustration-author {
+      margin:0;
+      color:#64748b;
       font-size:.9rem;
+    }
+
+    /* =========================
+       イラスト拡大画面
+    ========================= */
+
+    .modal {
+      display:none;
+      position:fixed;
+      z-index:1000;
+      inset:0;
+      background:rgba(0,0,0,.88);
+      align-items:center;
+      justify-content:center;
+      padding:30px;
+    }
+
+    .modal.open {
+      display:flex;
+    }
+
+    .modal-content {
+      position:relative;
+      max-width:95vw;
+      max-height:95vh;
+      text-align:center;
+    }
+
+    .modal img {
+      max-width:90vw;
+      max-height:82vh;
+      object-fit:contain;
+      border-radius:8px;
+    }
+
+    .modal-info {
+      color:white;
+      margin-top:10px;
+    }
+
+    .modal-info p {
+      margin:3px;
+    }
+
+    .close-modal {
+      position:fixed;
+      top:20px;
+      right:30px;
+      border:0;
+      background:none;
+      color:white;
+      font-size:2.5rem;
+      cursor:pointer;
+    }
+
+    /* =========================
+       その他
+    ========================= */
+
+    .section {
+      display:none;
+    }
+
+    .section.active {
+      display:block;
+    }
+
+    .section-title {
+      margin:0 0 20px;
+      font-size:1.5rem;
     }
 
     footer {
@@ -185,7 +358,16 @@
       padding:0 20px 35px;
     }
 
-    @media(max-width:480px) {
+    @media(max-width:600px) {
+
+      .category-menu {
+        grid-template-columns:repeat(2,1fr);
+      }
+
+      .illustration-grid {
+        grid-template-columns:repeat(2,1fr);
+      }
+
       .game {
         padding:16px;
       }
@@ -194,238 +376,502 @@
         width:80px;
         height:80px;
       }
+
     }
+
   </style>
 </head>
 
 <body>
 
 <header>
-  <h1>🎮 GAME EXHIBITION</h1>
-  <p>学祭 サークル作品展示 ｜ 気になるゲームを選んで遊ぼう！</p>
+  <h1>🎨 CREATIVE EXHIBITION</h1>
+  <p>学祭 サークル作品展示</p>
 </header>
 
 <main>
 
-  <div class="notice">
-    これはテスト用サイトです。作品名・作者名・URLはサンプルです。
-    実際の展示前に書き換えてください。
-  </div>
+  <!-- =========================
+       カテゴリ
+  ========================== -->
 
-  <div class="toolbar">
-    <input
-      id="search"
-      type="search"
-      placeholder="作品名・作者名・ジャンルで検索"
-      aria-label="作品を検索"
-    >
-    <span id="count"></span>
-  </div>
+  <nav class="category-menu">
 
-  <section id="games" aria-label="作品一覧"></section>
+    <button
+      class="category-button active"
+      data-section="game-section">
+      🎮 ゲーム
+    </button>
+
+    <button
+      class="category-button"
+      data-section="music-section">
+      🎵 音楽
+    </button>
+
+    <button
+      class="category-button"
+      data-section="video-section">
+      🎬 動画
+    </button>
+
+    <button
+      class="category-button"
+      data-section="illustration-section">
+      🎨 イラスト
+    </button>
+
+  </nav>
+
+
+  <!-- =========================
+       ゲーム
+  ========================== -->
+
+  <section id="game-section" class="section active">
+
+    <h1 class="section-title">🎮 ゲーム作品</h1>
+
+    <div class="toolbar">
+
+      <input
+        id="search"
+        type="search"
+        placeholder="作品名・作者名・ジャンルで検索"
+      >
+
+      <span id="count"></span>
+
+    </div>
+
+    <div id="games"></div>
+
+  </section>
+
+
+  <!-- =========================
+       音楽
+  ========================== -->
+
+  <section id="music-section" class="section">
+
+    <h1 class="section-title">🎵 音楽作品</h1>
+
+    <div id="musics" class="media-list"></div>
+
+  </section>
+
+
+  <!-- =========================
+       動画
+  ========================== -->
+
+  <section id="video-section" class="section">
+
+    <h1 class="section-title">🎬 動画作品</h1>
+
+    <div id="videos" class="media-list"></div>
+
+  </section>
+
+
+  <!-- =========================
+       イラスト
+  ========================== -->
+
+  <section id="illustration-section" class="section">
+
+    <h1 class="section-title">🎨 イラスト作品</h1>
+
+    <div id="illustrations" class="illustration-grid"></div>
+
+  </section>
 
 </main>
 
+
+<!-- イラスト拡大画面 -->
+
+<div id="imageModal" class="modal">
+
+  <button
+    id="closeModal"
+    class="close-modal">
+    ×
+  </button>
+
+  <div class="modal-content">
+
+    <img id="modalImage" src="" alt="">
+
+    <div class="modal-info">
+
+      <p id="modalTitle"></p>
+
+      <p id="modalAuthor"></p>
+
+    </div>
+
+  </div>
+
+</div>
+
+
 <footer>
-  サークル作品展示 ｜ ゲームのプレイ後はこのタブに戻ってください
+  サークル作品展示
 </footer>
+
 
 <script>
 
-/*
-==================================================
- ★ 作品を追加・編集する場所
-==================================================
+/* ==================================================
+   ここから作品データ
+================================================== */
 
- title   : 作品名
- author  : 作者名
- genre   : ジャンル
- image   : ゲーム画像
- url     : ゲームのURL
- comment : 作者コメント
-*/
+
+/* =========================
+   ゲーム
+========================= */
 
 const games = [
 
   {
-    title: "スペースシューター",
-    author: "山田 太郎",
-    genre: "シューティング",
-    image: "images/space-shooter.png",
-    url: "https://www.youtube.com/",
-    comment: "宇宙を舞台にしたシューティングゲームです。敵の攻撃を避けながらハイスコアを目指してください。操作はシンプルですが、後半になるほど敵の攻撃が激しくなります。ぜひ最後まで遊んでみてください！"
+    title:"スペースシューター",
+    author:"山田 太郎",
+    genre:"シューティング",
+    image:"images/games/space-shooter.png",
+    url:"https://unityroom.com/games/example1",
+    comment:"宇宙を舞台にしたシューティングゲームです。敵の攻撃を避けながらハイスコアを目指してください。"
   },
 
   {
-    title: "迷宮からの脱出",
-    author: "佐藤 花子",
-    genre: "謎解き",
-    image: "images/meikyu.png",
-    url: "https://unityroom.com/games/example2",
-    comment: "迷宮に隠されたヒントを探して脱出を目指すゲームです。いろいろな場所を調べることで新しい発見があります。"
+    title:"迷宮からの脱出",
+    author:"佐藤 花子",
+    genre:"謎解き",
+    image:"images/games/meikyu.png",
+    url:"https://unityroom.com/games/example2",
+    comment:"迷宮に隠されたヒントを探して脱出を目指すゲームです。"
   },
 
   {
-    title: "ねこの大冒険",
-    author: "鈴木 一郎",
-    genre: "アクション",
-    image: "images/neko.png",
-    url: "https://unityroom.com/games/example3",
-    comment: "猫を操作してゴールを目指すアクションゲームです。ジャンプをうまく使ってステージを攻略してください。"
-  },
-
-  {
-    title: "星空パズル",
-    author: "田中 美咲",
-    genre: "パズル",
-    image: "images/hoshizora.png",
-    url: "https://unityroom.com/games/example4",
-    comment: "星をテーマにしたパズルゲームです。じっくり考えながら遊んでもらえるとうれしいです。"
-  },
-
-  {
-    title: "ドットレーサー",
-    author: "高橋 健",
-    genre: "レース",
-    image: "images/racer.png",
-    url: "https://unityroom.com/games/example5",
-    comment: "ドット絵で作ったレースゲームです。最速タイムを目指して何度も挑戦してみてください！"
-  },
-
-  {
-    title: "おばけ屋敷",
-    author: "伊藤 葵",
-    genre: "ホラー",
-    image: "images/obake.png",
-    url: "https://unityroom.com/games/example6",
-    comment: "不思議なおばけ屋敷を探索するゲームです。屋敷の中を調べながら出口を探してください。"
+    title:"ねこの大冒険",
+    author:"鈴木 一郎",
+    genre:"アクション",
+    image:"images/games/neko.png",
+    url:"https://unityroom.com/games/example3",
+    comment:"猫を操作してゴールを目指すアクションゲームです。"
   }
 
 ];
 
-const list = document.getElementById("games");
-const count = document.getElementById("count");
-const search = document.getElementById("search");
 
-function render() {
+/* =========================
+   音楽
 
-  const q = search.value
-    .trim()
-    .toLocaleLowerCase();
+   src にMP3ファイルを書く
+========================= */
+
+const musics = [
+
+  {
+    title:"星空",
+    author:"佐藤 花子",
+    src:"music/hoshizora.mp3"
+  },
+
+  {
+    title:"Adventure",
+    author:"山田 太郎",
+    src:"music/adventure.mp3"
+  },
+
+  {
+    title:"夜の街",
+    author:"鈴木 一郎",
+    src:"music/night.mp3"
+  }
+
+];
+
+
+/* =========================
+   動画
+
+   src にMP4ファイルを書く
+========================= */
+
+const videos = [
+
+  {
+    title:"自主制作アニメーション",
+    author:"田中 美咲",
+    src:"videos/animation.mp4"
+  },
+
+  {
+    title:"3DCG作品",
+    author:"高橋 健",
+    src:"videos/3dcg.mp4"
+  }
+
+];
+
+
+/* =========================
+   イラスト
+========================= */
+
+const illustrations = [
+
+  {
+    title:"星空",
+    author:"佐藤 花子",
+    image:"images/illustrations/hoshizora.jpg"
+  },
+
+  {
+    title:"街",
+    author:"山田 太郎",
+    image:"images/illustrations/city.jpg"
+  },
+
+  {
+    title:"猫",
+    author:"鈴木 一郎",
+    image:"images/illustrations/cat.jpg"
+  },
+
+  {
+    title:"海",
+    author:"田中 美咲",
+    image:"images/illustrations/sea.jpg"
+  },
+
+  {
+    title:"森",
+    author:"高橋 健",
+    image:"images/illustrations/forest.jpg"
+  },
+
+  {
+    title:"夜景",
+    author:"伊藤 葵",
+    image:"images/illustrations/night.jpg"
+  }
+
+];
+
+
+/* ==================================================
+   カテゴリ切り替え
+================================================== */
+
+const categoryButtons =
+  document.querySelectorAll(".category-button");
+
+const sections =
+  document.querySelectorAll(".section");
+
+
+categoryButtons.forEach(button => {
+
+  button.addEventListener("click", () => {
+
+    categoryButtons.forEach(b =>
+      b.classList.remove("active")
+    );
+
+    sections.forEach(section =>
+      section.classList.remove("active")
+    );
+
+    button.classList.add("active");
+
+    document
+      .getElementById(button.dataset.section)
+      .classList.add("active");
+
+  });
+
+});
+
+
+/* ==================================================
+   ゲーム
+================================================== */
+
+const gameList =
+  document.getElementById("games");
+
+const count =
+  document.getElementById("count");
+
+const search =
+  document.getElementById("search");
+
+
+function renderGames() {
+
+  const q =
+    search.value.trim().toLocaleLowerCase();
+
 
   const found = games.filter(g =>
-    [g.title, g.author, g.genre]
+
+    [g.title,g.author,g.genre]
+
       .some(s =>
         s.toLocaleLowerCase().includes(q)
       )
+
   );
 
-  count.textContent = `${found.length}作品`;
 
-  list.replaceChildren();
+  count.textContent =
+    `${found.length}作品`;
 
-  if (!found.length) {
 
-    const p = document.createElement("p");
+  gameList.replaceChildren();
 
-    p.textContent = "該当する作品がありません。";
 
-    list.append(p);
+  for(const g of found) {
 
-    return;
-  }
+    const article =
+      document.createElement("article");
 
-  for (const g of found) {
+    article.className =
+      "game";
 
-    const article = document.createElement("article");
-    article.className = "game";
 
-    /* 上部 */
+    const heading =
+      document.createElement("div");
 
-    const heading = document.createElement("div");
-    heading.className = "heading";
+    heading.className =
+      "heading";
 
-    /* ゲーム画像 */
 
-    const image = document.createElement("img");
+    const image =
+      document.createElement("img");
 
-    image.className = "game-image";
-    image.src = g.image;
-    image.alt = `${g.title}のゲーム画像`;
+    image.className =
+      "game-image";
 
-    const info = document.createElement("div");
+    image.src =
+      g.image;
 
-    const title = document.createElement("h2");
-    title.textContent = g.title;
+    image.alt =
+      g.title;
 
-    const author = document.createElement("p");
-    author.className = "author";
-    author.textContent = `作者：${g.author}`;
 
-    info.append(title, author);
+    const info =
+      document.createElement("div");
 
-    heading.append(image, info);
 
-    /* ジャンル */
+    const title =
+      document.createElement("h2");
 
-    const genre = document.createElement("span");
+    title.textContent =
+      g.title;
 
-    genre.className = "genre";
-    genre.textContent = g.genre;
 
-    /* URL */
+    const author =
+      document.createElement("p");
 
-    const url = document.createElement("a");
+    author.className =
+      "author";
 
-    url.className = "url";
-    url.textContent = g.url;
-    url.href = g.url;
+    author.textContent =
+      `作者：${g.author}`;
 
-    /* 新しいタブで開く */
-    url.target = "_blank";
-    url.rel = "noopener noreferrer";
 
-    /* コメント */
+    info.append(
+      title,
+      author
+    );
 
-    const commentArea = document.createElement("div");
-    commentArea.className = "comment-area";
 
-    const comment = document.createElement("p");
+    heading.append(
+      image,
+      info
+    );
 
-    comment.className = "comment collapsed";
-    comment.textContent = g.comment;
 
-    /* もっと見る */
+    const genre =
+      document.createElement("span");
 
-    const moreButton = document.createElement("button");
+    genre.className =
+      "genre";
 
-    moreButton.className = "more-button";
-    moreButton.type = "button";
-    moreButton.textContent = "もっと見る ▼";
+    genre.textContent =
+      g.genre;
 
-    moreButton.addEventListener("click", () => {
 
-      const isCollapsed =
-        comment.classList.contains("collapsed");
+    const url =
+      document.createElement("a");
 
-      if (isCollapsed) {
+    url.className =
+      "url";
 
-        comment.classList.remove("collapsed");
-        moreButton.textContent = "閉じる ▲";
+    url.textContent =
+      g.url;
 
-      } else {
+    url.href =
+      g.url;
 
-        comment.classList.add("collapsed");
-        moreButton.textContent = "もっと見る ▼";
+    url.target =
+      "_blank";
 
-      }
+    url.rel =
+      "noopener noreferrer";
 
-    });
+
+    const commentArea =
+      document.createElement("div");
+
+    commentArea.className =
+      "comment-area";
+
+
+    const comment =
+      document.createElement("p");
+
+    comment.className =
+      "comment collapsed";
+
+    comment.textContent =
+      g.comment;
+
+
+    const more =
+      document.createElement("button");
+
+    more.className =
+      "more-button";
+
+    more.textContent =
+      "もっと見る ▼";
+
+
+    more.onclick = () => {
+
+      const collapsed =
+        comment.classList.toggle(
+          "collapsed"
+        );
+
+      more.textContent =
+        collapsed
+          ? "もっと見る ▼"
+          : "閉じる ▲";
+
+    };
+
 
     commentArea.append(
       comment,
-      moreButton
+      more
     );
+
 
     article.append(
       heading,
@@ -434,15 +880,298 @@ function render() {
       commentArea
     );
 
-    list.append(article);
+
+    gameList.append(article);
 
   }
 
 }
 
-search.addEventListener("input", render);
 
-render();
+search.addEventListener(
+  "input",
+  renderGames
+);
+
+
+renderGames();
+
+
+/* ==================================================
+   音楽
+================================================== */
+
+const musicList =
+  document.getElementById("musics");
+
+
+for(const music of musics) {
+
+  const card =
+    document.createElement("article");
+
+  card.className =
+    "media-card";
+
+
+  const title =
+    document.createElement("h2");
+
+  title.textContent =
+    music.title;
+
+
+  const author =
+    document.createElement("p");
+
+  author.className =
+    "author";
+
+  author.textContent =
+    `作者：${music.author}`;
+
+
+  const audio =
+    document.createElement("audio");
+
+  audio.controls =
+    true;
+
+  audio.preload =
+    "metadata";
+
+  audio.src =
+    music.src;
+
+
+  card.append(
+    title,
+    author,
+    audio
+  );
+
+
+  musicList.append(card);
+
+}
+
+
+/* ==================================================
+   動画
+================================================== */
+
+const videoList =
+  document.getElementById("videos");
+
+
+for(const videoData of videos) {
+
+  const card =
+    document.createElement("article");
+
+  card.className =
+    "media-card";
+
+
+  const title =
+    document.createElement("h2");
+
+  title.textContent =
+    videoData.title;
+
+
+  const author =
+    document.createElement("p");
+
+  author.className =
+    "author";
+
+  author.textContent =
+    `作者：${videoData.author}`;
+
+
+  const video =
+    document.createElement("video");
+
+  video.controls =
+    true;
+
+  video.preload =
+    "metadata";
+
+  video.src =
+    videoData.src;
+
+
+  card.append(
+    title,
+    author,
+    video
+  );
+
+
+  videoList.append(card);
+
+}
+
+
+/* ==================================================
+   イラスト
+================================================== */
+
+const illustrationList =
+  document.getElementById("illustrations");
+
+const modal =
+  document.getElementById("imageModal");
+
+const modalImage =
+  document.getElementById("modalImage");
+
+const modalTitle =
+  document.getElementById("modalTitle");
+
+const modalAuthor =
+  document.getElementById("modalAuthor");
+
+const closeModal =
+  document.getElementById("closeModal");
+
+
+for(const illust of illustrations) {
+
+  const card =
+    document.createElement("article");
+
+  card.className =
+    "illustration-card";
+
+
+  const image =
+    document.createElement("img");
+
+  image.src =
+    illust.image;
+
+  image.alt =
+    illust.title;
+
+
+  const info =
+    document.createElement("div");
+
+  info.className =
+    "illustration-info";
+
+
+  const title =
+    document.createElement("p");
+
+  title.className =
+    "illustration-title";
+
+  title.textContent =
+    illust.title;
+
+
+  const author =
+    document.createElement("p");
+
+  author.className =
+    "illustration-author";
+
+  author.textContent =
+    `作者：${illust.author}`;
+
+
+  info.append(
+    title,
+    author
+  );
+
+
+  card.append(
+    image,
+    info
+  );
+
+
+  illustrationList.append(card);
+
+
+  /* クリックすると拡大 */
+
+  image.addEventListener(
+    "click",
+    () => {
+
+      modalImage.src =
+        illust.image;
+
+      modalTitle.textContent =
+        illust.title;
+
+      modalAuthor.textContent =
+        `作者：${illust.author}`;
+
+      modal.classList.add(
+        "open"
+      );
+
+    }
+  );
+
+}
+
+
+/* ×で閉じる */
+
+closeModal.addEventListener(
+  "click",
+  () => {
+
+    modal.classList.remove(
+      "open"
+    );
+
+  }
+);
+
+
+/* 黒い部分をクリックしても閉じる */
+
+modal.addEventListener(
+  "click",
+  e => {
+
+    if(e.target === modal) {
+
+      modal.classList.remove(
+        "open"
+      );
+
+    }
+
+  }
+);
+
+
+/* ESCでも閉じる */
+
+document.addEventListener(
+  "keydown",
+  e => {
+
+    if(e.key === "Escape") {
+
+      modal.classList.remove(
+        "open"
+      );
+
+    }
+
+  }
+);
 
 </script>
 
