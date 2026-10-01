@@ -83,19 +83,18 @@
 
     .heading {
       display:flex;
-      gap:14px;
+      gap:16px;
       align-items:center;
     }
 
-    .emoji {
-      width:64px;
-      height:64px;
-      display:grid;
-      place-items:center;
-      background:#eef2ff;
+    /* ゲーム画像 */
+    .game-image {
+      width:100px;
+      height:100px;
+      object-fit:cover;
       border-radius:14px;
-      font-size:2rem;
       flex-shrink:0;
+      background:#e2e8f0;
     }
 
     h2 {
@@ -118,7 +117,6 @@
       margin-top:12px;
     }
 
-    /* URL */
     .url {
       display:block;
       color:#2563eb;
@@ -132,20 +130,13 @@
       color:#1d4ed8;
     }
 
-    /* 作者コメント */
+    /* コメント */
     .comment-area {
       margin-top:15px;
       padding:14px 16px;
       background:#f8fafc;
       border-left:4px solid #6366f1;
       border-radius:8px;
-    }
-
-    .comment-title {
-      font-weight:700;
-      margin:0 0 7px;
-      color:#334155;
-      font-size:.9rem;
     }
 
     .comment {
@@ -155,7 +146,7 @@
       white-space:pre-wrap;
     }
 
-    /* 通常は3行だけ表示 */
+    /* 最初は3行だけ */
     .comment.collapsed {
       display:-webkit-box;
       -webkit-box-orient:vertical;
@@ -199,9 +190,9 @@
         padding:16px;
       }
 
-      .emoji {
-        width:52px;
-        height:52px;
+      .game-image {
+        width:80px;
+        height:80px;
       }
     }
   </style>
@@ -249,10 +240,9 @@
  title   : 作品名
  author  : 作者名
  genre   : ジャンル
- emoji   : アイコン
+ image   : ゲーム画像
  url     : ゲームのURL
- comment : 作者からのコメント
-
+ comment : 作者コメント
 */
 
 const games = [
@@ -261,7 +251,7 @@ const games = [
     title: "スペースシューター",
     author: "山田 太郎",
     genre: "シューティング",
-    emoji: "🚀",
+    image: "images/space-shooter.png",
     url: "https://www.youtube.com/",
     comment: "宇宙を舞台にしたシューティングゲームです。敵の攻撃を避けながらハイスコアを目指してください。操作はシンプルですが、後半になるほど敵の攻撃が激しくなります。ぜひ最後まで遊んでみてください！"
   },
@@ -270,7 +260,7 @@ const games = [
     title: "迷宮からの脱出",
     author: "佐藤 花子",
     genre: "謎解き",
-    emoji: "🗝️",
+    image: "images/meikyu.png",
     url: "https://unityroom.com/games/example2",
     comment: "迷宮に隠されたヒントを探して脱出を目指すゲームです。いろいろな場所を調べることで新しい発見があります。"
   },
@@ -279,7 +269,7 @@ const games = [
     title: "ねこの大冒険",
     author: "鈴木 一郎",
     genre: "アクション",
-    emoji: "🐱",
+    image: "images/neko.png",
     url: "https://unityroom.com/games/example3",
     comment: "猫を操作してゴールを目指すアクションゲームです。ジャンプをうまく使ってステージを攻略してください。"
   },
@@ -288,7 +278,7 @@ const games = [
     title: "星空パズル",
     author: "田中 美咲",
     genre: "パズル",
-    emoji: "⭐",
+    image: "images/hoshizora.png",
     url: "https://unityroom.com/games/example4",
     comment: "星をテーマにしたパズルゲームです。じっくり考えながら遊んでもらえるとうれしいです。"
   },
@@ -297,7 +287,7 @@ const games = [
     title: "ドットレーサー",
     author: "高橋 健",
     genre: "レース",
-    emoji: "🏎️",
+    image: "images/racer.png",
     url: "https://unityroom.com/games/example5",
     comment: "ドット絵で作ったレースゲームです。最速タイムを目指して何度も挑戦してみてください！"
   },
@@ -306,18 +296,16 @@ const games = [
     title: "おばけ屋敷",
     author: "伊藤 葵",
     genre: "ホラー",
-    emoji: "👻",
+    image: "images/obake.png",
     url: "https://unityroom.com/games/example6",
     comment: "不思議なおばけ屋敷を探索するゲームです。屋敷の中を調べながら出口を探してください。"
   }
 
 ];
 
-
 const list = document.getElementById("games");
 const count = document.getElementById("count");
 const search = document.getElementById("search");
-
 
 function render() {
 
@@ -336,191 +324,108 @@ function render() {
 
   list.replaceChildren();
 
-
   if (!found.length) {
 
     const p = document.createElement("p");
 
-    p.textContent =
-      "該当する作品がありません。";
+    p.textContent = "該当する作品がありません。";
 
     list.append(p);
 
     return;
   }
 
-
   for (const g of found) {
 
-    /* 作品全体 */
-
-    const article =
-      document.createElement("article");
-
+    const article = document.createElement("article");
     article.className = "game";
-
 
     /* 上部 */
 
-    const heading =
-      document.createElement("div");
-
+    const heading = document.createElement("div");
     heading.className = "heading";
 
+    /* ゲーム画像 */
 
-    const emoji =
-      document.createElement("div");
+    const image = document.createElement("img");
 
-    emoji.className = "emoji";
-    emoji.textContent = g.emoji;
+    image.className = "game-image";
+    image.src = g.image;
+    image.alt = `${g.title}のゲーム画像`;
 
+    const info = document.createElement("div");
 
-    const info =
-      document.createElement("div");
-
-
-    const title =
-      document.createElement("h2");
-
+    const title = document.createElement("h2");
     title.textContent = g.title;
 
-
-    const author =
-      document.createElement("p");
-
+    const author = document.createElement("p");
     author.className = "author";
-    author.textContent =
-      `作者：${g.author}`;
+    author.textContent = `作者：${g.author}`;
 
+    info.append(title, author);
 
-    info.append(
-      title,
-      author
-    );
-
-
-    heading.append(
-      emoji,
-      info
-    );
-
+    heading.append(image, info);
 
     /* ジャンル */
 
-    const genre =
-      document.createElement("span");
+    const genre = document.createElement("span");
 
     genre.className = "genre";
     genre.textContent = g.genre;
 
-
     /* URL */
 
-    const url =
-      document.createElement("a");
+    const url = document.createElement("a");
 
     url.className = "url";
-
     url.textContent = g.url;
-
     url.href = g.url;
 
     /* 新しいタブで開く */
-
     url.target = "_blank";
+    url.rel = "noopener noreferrer";
 
-    url.rel =
-      "noopener noreferrer";
+    /* コメント */
 
+    const commentArea = document.createElement("div");
+    commentArea.className = "comment-area";
 
-    /* 作者コメント */
+    const comment = document.createElement("p");
 
-    const commentArea =
-      document.createElement("div");
-
-    commentArea.className =
-      "comment-area";
-
-
-    const commentTitle =
-      document.createElement("p");
-
-    commentTitle.className =
-      "comment-title";
-
-    commentTitle.textContent =
-      "💬 作者からのコメント";
-
-
-    const comment =
-      document.createElement("p");
-
-    comment.className =
-      "comment collapsed";
-
-    comment.textContent =
-      g.comment;
-
+    comment.className = "comment collapsed";
+    comment.textContent = g.comment;
 
     /* もっと見る */
 
-    const moreButton =
-      document.createElement("button");
+    const moreButton = document.createElement("button");
 
-    moreButton.className =
-      "more-button";
+    moreButton.className = "more-button";
+    moreButton.type = "button";
+    moreButton.textContent = "もっと見る ▼";
 
-    moreButton.type =
-      "button";
+    moreButton.addEventListener("click", () => {
 
-    moreButton.textContent =
-      "もっと見る ▼";
+      const isCollapsed =
+        comment.classList.contains("collapsed");
 
+      if (isCollapsed) {
 
-    moreButton.addEventListener(
-      "click",
-      () => {
+        comment.classList.remove("collapsed");
+        moreButton.textContent = "閉じる ▲";
 
-        const isCollapsed =
-          comment.classList.contains(
-            "collapsed"
-          );
+      } else {
 
-
-        if (isCollapsed) {
-
-          comment.classList.remove(
-            "collapsed"
-          );
-
-          moreButton.textContent =
-            "閉じる ▲";
-
-        }
-
-        else {
-
-          comment.classList.add(
-            "collapsed"
-          );
-
-          moreButton.textContent =
-            "もっと見る ▼";
-
-        }
+        comment.classList.add("collapsed");
+        moreButton.textContent = "もっと見る ▼";
 
       }
-    );
 
+    });
 
     commentArea.append(
-      commentTitle,
       comment,
       moreButton
     );
-
-
-    /* 作品カードに追加 */
 
     article.append(
       heading,
@@ -529,19 +434,13 @@ function render() {
       commentArea
     );
 
-
     list.append(article);
 
   }
 
 }
 
-
-search.addEventListener(
-  "input",
-  render
-);
-
+search.addEventListener("input", render);
 
 render();
 
