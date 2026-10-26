@@ -18,7 +18,56 @@ main{max-width:1250px}
 .guide p{margin:0;white-space:pre-line}
 .guide-empty{visibility:hidden}
 @media(max-width:700px){.section-layout{grid-template-columns:minmax(0,1fr)}.guide{position:static;max-height:none}.guide-empty{display:none}}
-</style>
+/* イラスト拡大表示 */
+.modal {
+    position: fixed;
+    overflow: hidden;
+}
+
+.modal-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.modal-content img {
+    display: block;
+    max-width: 80vw;
+    max-height: 72vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+}
+
+/* 左右の切り替えボタン */
+.image-nav {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 100;
+    width: 60px;
+    height: 80px;
+    border: none;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+    font-size: 42px;
+    cursor: pointer;
+}
+
+.image-nav:hover {
+    background: rgba(255, 255, 255, 0.35);
+}
+
+.image-nav.prev {
+    left: 20px;
+}
+
+.image-nav.next {
+    right: 20px;
+}</style>
 </head>
 <body>
 <header><h1>MULTI CREATORS CLUB</h1><p>学祭 サークル作品展示</p></header>
@@ -34,7 +83,19 @@ main{max-width:1250px}
 <section id="video-section" class="section" hidden><div class="section-layout"><aside class="guide"><h3>ご利用案内</h3><p>リンクを左クリックしてください。視聴終了の際はタブを閉じてください。</p></aside><div class="section-content"><h2 class="section-title">動画作品</h2><div class="toolbar"><input id="video-search" type="search" placeholder="作品名・作者名で検索" aria-label="動画を検索"><span id="video-count"></span></div><div id="videos" class="work-list"></div></div></div></section>
 <section id="illustration-section" class="section" hidden><div class="section-layout"><aside class="guide guide-empty" aria-hidden="true"></aside><div class="section-content"><h2 class="section-title">イラスト作品</h2><div class="toolbar"><input id="illustration-search" type="search" placeholder="作品名・作者名で検索" aria-label="イラストを検索"><span id="illustration-count"></span></div><div id="illustrations" class="illustration-grid"></div></div></div></section>
 </main>
-<dialog id="imageModal" class="modal" aria-label="イラスト拡大表示"><button id="closeModal" type="button" class="close-modal" aria-label="閉じる">×</button><img id="modalImage" alt=""><p id="modalTitle"></p><p id="modalAuthor"></p></dialog>
+<dialog id="imageModal" class="modal" aria-label="イラスト拡大表示">
+  <button id="closeModal" type="button" class="close-modal" aria-label="閉じる">×</button>
+
+  <button id="prevImage" type="button" class="image-nav prev" aria-label="前のイラスト">〈</button>
+
+  <div class="modal-content">
+    <img id="modalImage" alt="">
+    <p id="modalTitle"></p>
+    <p id="modalAuthor"></p>
+  </div>
+
+  <button id="nextImage" type="button" class="image-nav next" aria-label="次のイラスト">〉</button>
+</dialog>
 <footer>サークル作品展示 ｜ リンクは新しいタブで開きます</footer>
 <script>
 // ===== 作品データ：ここを書き換えてください =====
@@ -69,7 +130,112 @@ function makeLink(value){const link=el('a','url',value);if(/^https:\/\//i.test(v
 function makeCard(title,author){const card=el('article','work-card');card.append(el('h2','',title),el('p','author',`作者：${author}`));return card;}
 function renderGames(){const q=document.getElementById('search').value.trim().toLocaleLowerCase();const filtered=games.filter(g=>[g.title,g.author,g.genre].some(v=>v.toLocaleLowerCase().includes(q)));const container=document.getElementById('games');container.replaceChildren();document.getElementById('count').textContent=`${filtered.length}作品`;if(!filtered.length){container.append(el('p','','該当する作品がありません。'));return;}for(const g of filtered){const card=el('article','work-card');const heading=el('div','heading');const img=el('img','game-image');img.src=g.image;img.alt=`${g.title}の画像`;img.loading='lazy';const info=el('div');info.append(el('h2','',g.title),el('p','author',`作者：${g.author}`));if(g.image){heading.append(img);}heading.append(info);card.append(heading,el('span','genre',g.genre),makeLink(g.url));if(g.comment){const area=el('div','comment-area');const comment=el('p','comment collapsed',g.comment);const more=el('button','more-button','もっと見る ▼');more.type='button';more.addEventListener('click',()=>{const collapsed=comment.classList.toggle('collapsed');more.textContent=collapsed?'もっと見る ▼':'閉じる ▲';});area.append(comment,more);card.append(area);requestAnimationFrame(()=>{if(comment.scrollHeight<=comment.clientHeight+2)more.hidden=true;});}container.append(card);}}
 function renderLinks(items,id,searchId,countId){const q=document.getElementById(searchId).value.trim().toLocaleLowerCase();const filtered=items.filter(item=>[item.title,item.author].some(v=>v.toLocaleLowerCase().includes(q)));const container=document.getElementById(id);container.replaceChildren();document.getElementById(countId).textContent=`${filtered.length}作品`;if(!filtered.length){container.append(el('p','','該当する作品がありません。'));return;}for(const item of filtered){const card=makeCard(item.title,item.author);card.append(makeLink(item.url));container.append(card);}}
-const modal=document.getElementById('imageModal');const modalImage=document.getElementById('modalImage');function renderIllustrations(){const q=document.getElementById('illustration-search').value.trim().toLocaleLowerCase();const filtered=illustrations.filter(item=>[item.title,item.author].some(v=>v.toLocaleLowerCase().includes(q)));const container=document.getElementById('illustrations');container.replaceChildren();document.getElementById('illustration-count').textContent=`${filtered.length}作品`;if(!filtered.length){container.append(el('p','','該当する作品がありません。'));return;}for(const item of filtered){const card=el('article','illustration-card');const button=el('button','illustration-open');button.type='button';button.setAttribute('aria-label',`${item.title}を拡大`);const img=el('img');img.src=item.image;img.alt=item.title;img.loading='lazy';button.append(img);button.addEventListener('click',()=>{modalImage.src=item.image;modalImage.alt=item.title;document.getElementById('modalTitle').textContent=item.title;document.getElementById('modalAuthor').textContent=`作者：${item.author}`;modal.showModal();});const info=el('div','illustration-info');info.append(el('p','illustration-title',item.title),el('p','illustration-author',`作者：${item.author}`));card.append(button,info);container.append(card);}}
+const modal=document.getElementById('imageModal');const modal = document.getElementById('imageModal');
+const modalImage = document.getElementById('modalImage');
+
+let currentImageIndex = 0;
+let displayedIllustrations = illustrations;
+
+// 指定した番号のイラストを表示する
+function showImage(index) {
+    if (displayedIllustrations.length === 0) return;
+
+    currentImageIndex =
+        (index + displayedIllustrations.length) % displayedIllustrations.length;
+
+    const item = displayedIllustrations[currentImageIndex];
+
+    modalImage.src = item.image;
+    modalImage.alt = item.title;
+
+    document.getElementById('modalTitle').textContent = item.title;
+    document.getElementById('modalAuthor').textContent =
+        `作者：${item.author}`;
+}
+
+// 次のイラスト
+function nextImage() {
+    showImage(currentImageIndex + 1);
+}
+
+// 前のイラスト
+function prevImage() {
+    showImage(currentImageIndex - 1);
+}
+
+// 左右ボタンのクリック処理
+document.getElementById('nextImage').addEventListener('click', nextImage);
+document.getElementById('prevImage').addEventListener('click', prevImage);
+
+// キーボードの左右キーでも切り替え
+document.addEventListener('keydown', function(event) {
+    if (!modal.open) return;
+
+    if (event.key === 'ArrowRight') {
+        event.preventDefault();
+        nextImage();
+    }
+
+    if (event.key === 'ArrowLeft') {
+        event.preventDefault();
+        prevImage();
+    }
+});
+
+// イラスト一覧を表示する
+function renderIllustrations() {
+    const q = document.getElementById('illustration-search')
+        .value.trim().toLocaleLowerCase();
+
+    const filtered = illustrations.filter(item =>
+        [item.title, item.author].some(v =>
+            v.toLocaleLowerCase().includes(q)
+        )
+    );
+
+    displayedIllustrations = filtered;
+
+    const container = document.getElementById('illustrations');
+    container.replaceChildren();
+
+    document.getElementById('illustration-count').textContent =
+        `${filtered.length}作品`;
+
+    if (!filtered.length) {
+        container.append(el('p', '', '該当する作品がありません。'));
+        return;
+    }
+
+    filtered.forEach((item, index) => {
+        const card = el('article', 'illustration-card');
+
+        const button = el('button', 'illustration-open');
+        button.type = 'button';
+        button.setAttribute('aria-label', `${item.title}を拡大`);
+
+        const img = el('img');
+        img.src = item.image;
+        img.alt = item.title;
+        img.loading = 'lazy';
+
+        button.append(img);
+
+        button.addEventListener('click', () => {
+            showImage(index);
+            modal.showModal();
+        });
+
+        const info = el('div', 'illustration-info');
+
+        info.append(
+            el('p', 'illustration-title', item.title),
+            el('p', 'illustration-author', `作者：${item.author}`)
+        );
+
+        card.append(button, info);
+        container.append(card);
+    });
+}
 document.querySelectorAll('.category-button').forEach(button=>button.addEventListener('click',()=>{document.querySelectorAll('.category-button').forEach(b=>{const active=b===button;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));});document.querySelectorAll('.section').forEach(section=>section.hidden=section.id!==button.dataset.section);window.scrollTo({top:0,behavior:'instant'});}));document.getElementById('search').addEventListener('input',renderGames);document.getElementById('closeModal').addEventListener('click',()=>modal.close());modal.addEventListener('click',event=>{if(event.target===modal)modal.close();});renderGames();document.getElementById('music-search').addEventListener('input',()=>renderLinks(musics,'musics','music-search','music-count'));document.getElementById('video-search').addEventListener('input',()=>renderLinks(videos,'videos','video-search','video-count'));document.getElementById('illustration-search').addEventListener('input',renderIllustrations);renderLinks(musics,'musics','music-search','music-count');renderLinks(videos,'videos','video-search','video-count');renderIllustrations();
 </script>
 </body>
