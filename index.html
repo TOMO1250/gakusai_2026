@@ -11,7 +11,12 @@
 
 /* 作品一覧の左側に固定する案内欄 */
 main{max-width:1250px}
-.section-layout{display:grid;grid-template-columns:280px minmax(0,1fr);gap:24px;align-items:start}
+.section-layout{
+    display:grid;
+    grid-template-columns:250px minmax(0,1fr) 250px;
+    gap:24px;
+    align-items:start;
+}
 .section-content{min-width:0}
 .guide{position:sticky;top:22px;background:#eef2ff;border:1px solid #c7d2fe;border-radius:16px;padding:22px;line-height:1.85;color:#27346a;max-height:calc(100vh - 44px);overflow:auto}
 .guide h3{margin:0 0 12px;font-size:1.1rem}
@@ -67,50 +72,24 @@ main{max-width:1250px}
 
 .image-nav.next {
     right: 20px;
-}/* 画面右側に固定するSNSリンク */
-.sns-panel {
-    position: fixed;
-    top: 50%;
-    right: 12px;
-    transform: translateY(-50%);
-    z-index: 500;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    padding: 12px;
-    background: white;
-    border: 1px solid #c7d2fe;
-    border-radius: 16px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.12);
+}/* 右側のSNS案内欄 */
+.sns-guide h4 {
+    margin: 16px 0 4px;
+    font-size: 1rem;
 }
 
-.sns-panel a {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 54px;
-    height: 54px;
-    border-radius: 12px;
-    color: white;
-    font-weight: bold;
-    text-decoration: none;
-    transition: transform 0.2s;
+.sns-guide h4:first-of-type {
+    margin-top: 0;
 }
 
-.sns-panel a:hover {
-    transform: scale(1.1);
+.sns-guide a {
+    color: #2563eb;
+    text-decoration: underline;
+    overflow-wrap: anywhere;
 }
 
-.sns-x {
-    background: #111111;
-}
-
-.sns-instagram {
-    background: #c13584;
-}
-
-.sns-youtube {
-    background: #ff0000;
+.sns-guide a:hover {
+    color: #1d4ed8;
 }</style>
 </head>
 <body>
