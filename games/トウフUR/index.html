@@ -51,14 +51,16 @@
         updateBannerVisibility();
       }
 
-      var buildUrl = "Build";
-      var loaderUrl = buildUrl + "/トウフUR.loader.js";
-      var config = {
-        arguments: [],
-        dataUrl: buildUrl + "/トウフUR.data.gz",
-        frameworkUrl: buildUrl + "/トウフUR.framework.js.gz",
-        codeUrl: buildUrl + "/トウフUR.wasm.gz",
-        streamingAssetsUrl: "StreamingAssets",
+      
+var buildUrl = "Build";
+var loaderUrl = buildUrl + "/トウフUR.loader.js";
+var config = {
+  arguments: [],
+  dataUrl: buildUrl + "/webgl.data",
+  frameworkUrl: buildUrl + "/build.framework.js",
+  codeUrl: buildUrl + "/build.wasm",
+  streamingAssetsUrl: "StreamingAssets",
+
         companyName: "DefaultCompany",
         productName: "My project (18)",
         productVersion: "0.1.0",
