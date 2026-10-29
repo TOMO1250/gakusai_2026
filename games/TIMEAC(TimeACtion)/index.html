@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no">
+    <title>TimeAC — タイムアクション</title>
+    <style>
+      html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; background: #050b12; color: #cfe7ec;
+        font-family: "Noto Sans JP", "Yu Gothic UI", "Hiragino Sans", sans-serif; }
+      #stage { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; }
+      /* Letterbox the 16:9 game inside any window without scrollbars. */
+      #unity-canvas { display: block; width: min(100vw, calc(100vh * 16 / 9)); height: min(100vh, calc(100vw * 9 / 16));
+        background: #09101a; outline: none; }
+      #loading { position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
+        gap: 14px; background: #050b12; transition: opacity .3s; }
+      #loading h1 { margin: 0; font-size: 28px; letter-spacing: .08em; color: #f4fbff; }
+      #loading p { margin: 0; font-size: 14px; color: #52e5e0; }
+      #bar { width: min(320px, 70vw); height: 6px; background: #13232f; border-radius: 3px; overflow: hidden; }
+      #fill { width: 0; height: 100%; background: #52e5e0; transition: width .2s; }
+      #credit { position: fixed; right: 10px; bottom: 6px; font-size: 11px; color: #4d6b75; }
+      #credit a { color: inherit; }
+    </style>
+  </head>
+  <body>
+    <div id="stage">
+      <canvas id="unity-canvas" width="1280" height="720" tabindex="-1"></canvas>
+    </div>
+    <div id="loading">
+      <h1>TIME / AC</h1>
+      <div id="bar"><div id="fill"></div></div>
+      <p id="status">読み込み中…</p>
+    </div>
+    <div id="credit">Font: Noto Sans JP (<a href="NotoSansJP-OFL.txt" target="_blank" rel="noopener">SIL OFL 1.1</a>)</div>
+    <script src="Build/WebGL-v1.3.loader.js"></script>
+    <script>
+      var canvas = document.querySelector("#unity-canvas");
+      var loading = document.querySelector("#loading");
+      // Keyboard play needs the canvas focused; arrow keys and Space must not scroll the page.
+      canvas.addEventListener("pointerdown", function () { canvas.focus(); });
+      window.addEventListener("keydown", function (e) {
+        if (["Space", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "Tab"].indexOf(e.code) >= 0) e.preventDefault();
+      }, { passive: false });
+
+      createUnityInstance(canvas, {
+        arguments: [],
+        dataUrl: "Build/WebGL-v1.3.data.unityweb",
+        frameworkUrl: "Build/WebGL-v1.3.framework.js.unityweb",
+        codeUrl: "Build/WebGL-v1.3.wasm.unityweb",
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: "TimeActionStudio",
+        productName: "TimeAC",
+        productVersion: "1.3.0",
+        autoSyncPersistentDataPath: true,
+      }, function (progress) {
+        document.querySelector("#fill").style.width = Math.round(progress * 100) + "%";
+      }).then(function () {
+        loading.style.opacity = "0";
+        setTimeout(function () { loading.style.display = "none"; }, 300);
+        canvas.focus();
+      }).catch(function (message) {
+        document.querySelector("#status").textContent = "起動できませんでした: " + message;
+      });
+    </script>
+  </body>
+</html>
