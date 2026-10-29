@@ -10,12 +10,14 @@
 
 /* 作品一覧の左側に固定する案内欄 */
 main{max-width:1250px}
-.section-layout{
-    display:grid;
-    grid-template-columns:250px minmax(0,1fr) 250px;
-    gap:24px;
-    align-items:start;
+
+.section-layout {
+  display: grid;
+  grid-template-columns: 250px minmax(0,1fr) 350px;
+  gap: 20px;
+  align-items: start;
 }
+
 .section-content{min-width:0}
 .guide{position:sticky;top:22px;background:#eef2ff;border:1px solid #c7d2fe;border-radius:16px;padding:22px;line-height:1.85;color:#27346a;max-height:calc(100vh - 44px);overflow:auto}
 .guide h3{margin:0 0 12px;font-size:1.1rem}
@@ -195,6 +197,78 @@ main{max-width:1250px}
   font-size: 0.8rem;
 }
 
+/* 右側のSNSとコメント欄 */
+.right-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: sticky;
+  top: 22px;
+
+  /* 内部スクロールをなくす */
+  max-height: none;
+  overflow: visible;
+}
+
+/* 2つの枠を同じ幅にする */
+.right-sidebar .guide {
+  position: static;
+  width: 100%;
+  max-height: none;
+  overflow: visible;
+  padding: 18px 20px;
+}
+
+/* SNSの項目を横並びにする */
+.sns-guide .sns-item {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: nowrap;
+  gap: 5px;
+  margin: 10px 0;
+}
+
+.sns-guide .sns-item h4 {
+  margin: 0;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+.sns-guide .sns-item a {
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+/* コメント欄 */
+.author-comment p {
+  margin: 0;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+/* 画面幅が狭い場合 */
+@media (max-width: 1000px) {
+  .section-layout {
+    grid-template-columns: 200px minmax(0,1fr) 300px;
+    gap: 12px;
+  }
+
+  .right-sidebar .guide {
+    padding: 14px;
+  }
+}
+
+@media (max-width: 700px) {
+  .section-layout {
+    grid-template-columns: minmax(0,1fr);
+  }
+
+  .right-sidebar {
+    position: static;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -257,17 +331,26 @@ main{max-width:1250px}
 <script>
     
 
+
 const snsHTML = `
   <h3>公式SNS</h3>
-  <h4>Twitter（現X）</h4>
-  <a href="https://twitter.com/mmc_info">Twitterを見る</a>
 
-  <h4>Instagram</h4>
-  <a href="https://www.instagram.com/multicreatorsclub_nanzan/">Instagramを見る</a>
+  <div class="sns-item">
+    <h4>Twitter（現X）：</h4>
+    <a href="https://twitter.com/mmc_info">Twitterを見る</a>
+  </div>
 
-  <h4>YouTube</h4>
-  <a href="https://www.youtube.com/@MultiCreatorsClub-4649">YouTubeを見る</a>
+  <div class="sns-item">
+    <h4>Instagram：</h4>
+    <a href="https://www.instagram.com/multicreatorsclub_nanzan/">Instagramを見る</a>
+  </div>
+
+  <div class="sns-item">
+    <h4>YouTube：</h4>
+    <a href="https://www.youtube.com/@MultiCreatorsClub-4649">YouTubeを見る</a>
+  </div>
 `;
+
 
 // 公式SNSを4か所に表示
 document.querySelectorAll('.sns-guide').forEach(aside => {
