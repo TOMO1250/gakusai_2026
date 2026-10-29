@@ -211,30 +211,186 @@ document.querySelectorAll('.author-comment').forEach(aside => {
 // ===== 作品データ：ここを書き換えてください =====
 // 画像は index.html と同じ場所の images フォルダに置いてください。
 
+
 const games = [
-  {title:"チャージショット",author:"未設定",genre:"シューティング",image:"img/チャージショット.png",url:"https://tomo1250.github.io/gakusai_2026/games/charge_shoot/",commentFile:"data/チャージショット.txt"},
-  {title:"I AM DICE",author:"みつのみや",genre:"3Dアクション",image:"img/I AM DICE.png",url:"https://unityroom.com/games/iamdice",commentFile:"data/I AM DICE.txt"},
-  {title:"伝説を求めて!",author:"HAYATEN",genre:"RPG",image:"img/伝説を求めて!.png",url:"https://tomo1250.github.io/gakusai_2026/games/伝説を求めて!/",commentFile:"data/伝説を求めて!.txt"},
-  {title:"ダンジョン脱出",author:"ASRa",genre:"3Dアクション",image:"img/ダンジョン脱出.png",url:"https://tomo1250.github.io/gakusai_2026/games/ダンジョン脱出",commentFile:"data/ダンジョン脱出.txt"},
-  {title:"ブレイクエスト",author:"もち",genre:"アクション",image:"img/ブレイクエスト.png",url:"https://tomo1250.github.io/gakusai_2026/games/ブレイクエスト",commentFile:"data/ブレイクエスト.txt"},
-  {title:"SCRAP&BUILD",author:"みつのみや",genre:"3D",image:"img/SCRAP&BUILD.png",url:"https://tomo1250.github.io/gakusai_2026/games/SCRAP&BUILD",commentFile:"data/SCRAP&BUILD.txt"},
-  {title:"2Dアクション with 妨害",author:"ASRa",genre:"2人対戦",image:"img/2Dアクション with 妨害.png",url:"https://tomo1250.github.io/gakusai_2026/games/2Dアクション with 妨害",commentFile:"data/2Dアクション with 妨害.txt"},
-  {title:"グレイテスト・インフィニティ・アルティメット・エターナル・ギャラクティック・レジェンダリートウフ",author:"みつのみや",genre:"3D",image:"img/グレイテスト・インフィニティ・アルティメット・エターナル・ギャラクティック・レジェンダリートウフ.png",url:"https://tomo1250.github.io/gakusai_2026/games/トウフUR",commentFile:"data/グレイテスト・インフィニティ・アルティメット・エターナル・ギャラクティック・レジェンダリートウフ.txt"},
-  {title:"前方から迫りくる車両を避けるゲーム",author:"みつのみや",genre:"2Dアクション",image:"img/前方から迫りくる車両を避けるゲーム.png",url:"https://tomo1250.github.io/gakusai_2026/games/前方から迫り来る車両を避けるゲーム",commentFile:"data/前方から迫りくる車両を避けるゲーム.txt"},
-  {title:"魔法探偵と首無し悪魔",author:"清原 聖弥",genre:"ノベルゲーム",image:"img/魔法探偵と首無し悪魔.png",url:"https://tomo1250.github.io/gakusai_2026/games/魔法探偵と首無し悪魔",commentFile:"data/魔法探偵と首無し悪魔.txt"},
-  {title:"地雷グリコ",author:"ツゲ",genre:"2D",image:"img/地雷グリコ.png",url:"https://tomo1250.github.io/gakusai_2026/games/地雷グリコ",commentFile:"data/地雷グリコ.txt"},
-  {title:"TIME/AC(TimeACtion)",author:"しゅう",genre:"2Dアクション",image:"img/TIME_AC(TimeACtion).png",url:"https://tomo1250.github.io/gakusai_2026/games/TIMEAC(TimeACtion)",commentFile:"data/TIME_AC(TimeACtion).txt"},
-  {title:"ULTRA DODGE",author:"Shell",genre:"2Dアクション",image:"img/ULTRA DODGE.png",url:"https://tomo1250.github.io/gakusai_2026/games/ULTRA DODGE",commentFile:"data/ULTRA DODGE.txt"},
-  {title:"ShootingStar",author:"#0966",genre:"2Dアクション",image:"img/ShootingStar.png",url:"https://tomo1250.github.io/gakusai_2026/games/ShootingStar",commentFile:"data/ShootingStar.txt"},
-  {title:"BLOCK OVER",author:"ひよこゼリー",genre:"テトリス",image:"img/BLOCK OVER.png",url:"https://tomo1250.github.io/gakusai_2026/games/BLOCK OVER/",commentFile:"data/BLOCK OVER.txt"},
-  {title:"FALL IN ABYSS",author:"ひよこゼリー",genre:"2Dアクション",image:"img/FALL IN ABYSS.png",url:"https://tomo1250.github.io/gakusai_2026/games/FALL IN ABYSS",commentFile:"data/FALL IN ABYSS.txt"},
-  {title:"Star Jumper",author:"ウニティー",genre:"2Dアクション",image:"img/Star Jumper.png",url:"https://tomo1250.github.io/gakusai_2026/games/Star Jumper",commentFile:"data/Star Jumper.txt"},
-  {title:"Change the world",author:"霜月",genre:"アクション",image:"img/Change the world.png",url:"https://tomo1250.github.io/gakusai_2026/games/Change the World",commentFile:"data/Change the world.txt"},
-  {title:"SIMPLESHOOT",author:"エリオットいぶき",genre:"2Dアクション",image:"img/SIMPLESHOOT.png",url:"https://tomo1250.github.io/gakusai_2026/games/SIMPLESHOT",commentFile:"data/SIMPLESHOOT.txt"},
-  {title:"青娥さんの方向感覚脱出",author:"ゆたろー",genre:"アクション",image:"img/青娥さんの方向感覚脱出.png",url:"https://tomo1250.github.io/gakusai_2026/games/青娥さんの方向感覚脱出",commentFile:"data/青娥さんの方向感覚脱出.txt"},
-  {title:"2人で対戦!ブロック崩し",author:"TOMO & KOTA",genre:"2人対戦",image:"img/2人で対戦!ブロック崩し.png",url:"https://tomo1250.github.io/gakusai_2026/games/2人で対戦!ブロック崩し",commentFile:"data/2人で対戦!ブロック崩し.txt"},
-  {title:"予備",author:"予備",genre:"アクション",image:"img/予備.png",url:"https://unityroom.com/games/example3",commentFile:"data/予備.txt"}
+  {
+    title:"チャージショット",
+    author:"未設定",
+    genre:"シューティング",
+    image:"games/charge_shoot/チャージショット.png",
+    url:"https://tomo1250.github.io/gakusai_2026/games/charge_shoot/",
+    commentFile:"games/charge_shoot/チャージショット.txt"
+  },
+  {
+    title:"I AM DICE",
+    author:"みつのみや",
+    genre:"3Dアクション",
+    image:"games/I AM DICE/I AM DICE.png",
+    url:"https://unityroom.com/games/iamdice",
+    commentFile:"games/I AM DICE/I AM DICE.txt"
+  },
+  {
+    title:"伝説を求めて!",
+    author:"HAYATEN",
+    genre:"RPG",
+    image:"games/伝説を求めて!/伝説を求めて!.png",
+    url:"https://tomo1250.github.io/gakusai_2026/games/伝説を求めて!/",
+    commentFile:"games/伝説を求めて!/伝説を求めて!.txt"
+  },
+  {
+    title:"ダンジョン脱出",
+    author:"ASRa",
+    genre:"3Dアクション",
+    image:"games/ダンジョン脱出/ダンジョン脱出.png",
+    url:"https://tomo1250.github.io/gakusai_2026/games/ダンジョン脱出",
+    commentFile:"games/ダンジョン脱出/ダンジョン脱出.txt"
+  },
+  {
+    title:"ブレイクエスト",
+    author:"もち",
+    genre:"アクション",
+    image:"games/ブレイクエスト/ブレイクエスト.png",
+    url:"https://tomo1250.github.io/gakusai_2026/games/ブレイクエスト",
+    commentFile:"games/ブレイクエスト/ブレイクエスト.txt"
+  },
+  {
+    title:"SCRAP&BUILD",
+    author:"みつのみや",
+    genre:"3D",
+    image:"games/SCRAP&BUILD/SCRAP&BUILD.png",
+    url:"https://tomo1250.github.io/gakusai_2026/games/SCRAP&BUILD",
+    commentFile:"games/SCRAP&BUILD/SCRAP&BUILD.txt"
+  },
+  {
+    title:"2Dアクション with 妨害",
+    author:"ASRa",
+    genre:"2人対戦",
+    image:"games/2Dアクション with 妨害/2Dアクション with 妨害.png",
+    url:"https://tomo1250.github.io/gakusai_2026/games/2Dアクション with 妨害",
+    commentFile:"games/2Dアクション with 妨害/2Dアクション with 妨害.txt"
+  },
+  {
+    title:"グレイテスト・インフィニティ・アルティメット・エターナル・ギャラクティック・レジェンダリートウフ",
+    author:"みつのみや",
+    genre:"3D",
+    image:"games/トウフUR/グレイテスト・インフィニティ・アルティメット・エターナル・ギャラクティック・レジェンダリートウフ.png",
+    url:"https://tomo1250.github.io/gakusai_2026/games/トウフUR",
+    commentFile:"games/トウフUR/グレイテスト・インフィニティ・アルティメット・エターナル・ギャラクティック・レジェンダリートウフ.txt"
+  },
+  {
+    title:"前方から迫りくる車両を避けるゲーム",
+    author:"みつのみや",
+    genre:"2Dアクション",
+    image:"games/前方から迫り来る車両を避けるゲーム/前方から迫りくる車両を避けるゲーム.png",
+    url:"https://tomo1250.github.io/gakusai_2026/games/前方から迫り来る車両を避けるゲーム",
+    commentFile:"games/前方から迫り来る車両を避けるゲーム/前方から迫りくる車両を避けるゲーム.txt"
+  },
+  {
+    title:"魔法探偵と首無し悪魔",
+    author:"清原 聖弥",
+    genre:"ノベルゲーム",
+    image:"games/魔法探偵と首無し悪魔/魔法探偵と首無し悪魔.png",
+    url:"https://tomo1250.github.io/gakusai_2026/games/魔法探偵と首無し悪魔",
+    commentFile:"games/魔法探偵と首無し悪魔/魔法探偵と首無し悪魔.txt"
+  },
+  {
+    title:"地雷グリコ",
+    author:"ツゲ",
+    genre:"2D",
+    image:"games/地雷グリコ/地雷グリコ.png",
+    url:"https://tomo1250.github.io/gakusai_2026/games/地雷グリコ",
+    commentFile:"games/地雷グリコ/地雷グリコ.txt"
+  },
+  {
+    title:"TIME/AC(TimeACtion)",
+    author:"しゅう",
+    genre:"2Dアクション",
+    image:"games/TIMEAC(TimeACtion)/TIME_AC(TimeACtion).png",
+    url:"https://tomo1250.github.io/gakusai_2026/games/TIMEAC(TimeACtion)",
+    commentFile:"games/TIMEAC(TimeACtion)/TIME_AC(TimeACtion).txt"
+  },
+  {
+    title:"ULTRA DODGE",
+    author:"Shell",
+    genre:"2Dアクション",
+    image:"games/ULTRA DODGE/ULTRA DODGE.png",
+    url:"https://tomo1250.github.io/gakusai_2026/games/ULTRA DODGE",
+    commentFile:"games/ULTRA DODGE/ULTRA DODGE.txt"
+  },
+  {
+    title:"ShootingStar",
+    author:"#0966",
+    genre:"2Dアクション",
+    image:"games/ShootingStar/ShootingStar.png",
+    url:"https://tomo1250.github.io/gakusai_2026/games/ShootingStar",
+    commentFile:"games/ShootingStar/ShootingStar.txt"
+  },
+  {
+    title:"BLOCK OVER",
+    author:"ひよこゼリー",
+    genre:"テトリス",
+    image:"games/BLOCK OVER/BLOCK OVER.png",
+    url:"https://tomo1250.github.io/gakusai_2026/games/BLOCK OVER/",
+    commentFile:"games/BLOCK OVER/BLOCK OVER.txt"
+  },
+  {
+    title:"FALL IN ABYSS",
+    author:"ひよこゼリー",
+    genre:"2Dアクション",
+    image:"games/FALL IN ABYSS/FALL IN ABYSS.png",
+    url:"https://tomo1250.github.io/gakusai_2026/games/FALL IN ABYSS",
+    commentFile:"games/FALL IN ABYSS/FALL IN ABYSS.txt"
+  },
+  {
+    title:"Star Jumper",
+    author:"ウニティー",
+    genre:"2Dアクション",
+    image:"games/Star Jumper/Star Jumper.png",
+    url:"https://tomo1250.github.io/gakusai_2026/games/Star Jumper",
+    commentFile:"games/Star Jumper/Star Jumper.txt"
+  },
+  {
+    title:"Change the world",
+    author:"霜月",
+    genre:"アクション",
+    image:"games/Change the World/Change the world.png",
+    url:"https://tomo1250.github.io/gakusai_2026/games/Change the World",
+    commentFile:"games/Change the World/Change the world.txt"
+  },
+  {
+    title:"SIMPLESHOOT",
+    author:"エリオットいぶき",
+    genre:"2Dアクション",
+    image:"games/SIMPLESHOT/SIMPLESHOOT.png",
+    url:"https://tomo1250.github.io/gakusai_2026/games/SIMPLESHOT",
+    commentFile:"games/SIMPLESHOT/SIMPLESHOOT.txt"
+  },
+  {
+    title:"青娥さんの方向感覚脱出",
+    author:"ゆたろー",
+    genre:"アクション",
+    image:"games/青娥さんの方向感覚脱出/青娥さんの方向感覚脱出.png",
+    url:"https://tomo1250.github.io/gakusai_2026/games/青娥さんの方向感覚脱出",
+    commentFile:"games/青娥さんの方向感覚脱出/青娥さんの方向感覚脱出.txt"
+  },
+  {
+    title:"2人で対戦!ブロック崩し",
+    author:"TOMO & KOTA",
+    genre:"2人対戦",
+    image:"games/2人で対戦!ブロック崩し/2人で対戦!ブロック崩し.png",
+    url:"https://tomo1250.github.io/gakusai_2026/games/2人で対戦!ブロック崩し",
+    commentFile:"games/2人で対戦!ブロック崩し/2人で対戦!ブロック崩し.txt"
+  },
+  {
+    title:"予備",
+    author:"予備",
+    genre:"アクション",
+    image:"games/予備/予備.png",
+    url:"https://unityroom.com/games/example3",
+    commentFile:"games/予備/予備.txt"
+  }
 ];
+
 
 // 音楽・動画は YouTube の限定公開共有URLを　url に指定します。
 const musics = [
