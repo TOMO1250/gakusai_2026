@@ -284,6 +284,39 @@ main{max-width:1250px}
 .pdf-page-controls[hidden]{display:none}
 .pdf-page-controls button{padding:6px 12px;border:1px solid #c7d2fe;border-radius:8px;background:#eef2ff;color:#27346a;cursor:pointer}
 .pdf-page-controls button:disabled{opacity:.45;cursor:default}
+
+/* 左側：ご利用案内と来場者アンケートを別々の枠にする */
+.left-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: sticky;
+  top: 22px;
+  min-width: 0;
+}
+.left-sidebar .guide {
+  position: static;
+  width: 100%;
+  max-height: none;
+  overflow: visible;
+  padding: 18px 20px;
+}
+.survey-guide { text-align: center; }
+.survey-guide h3 { text-align: left; }
+.survey-guide p { margin: 10px 0; line-height: 1.6; }
+.survey-qr {
+  display: block;
+  width: 180px;
+  max-width: 100%;
+  height: auto;
+  margin: 15px auto;
+  padding: 8px;
+  background: white;
+  border-radius: 10px;
+}
+@media (max-width: 700px) {
+  .left-sidebar { position: static; }
+}
 </style>
 </head>
 <body>
@@ -295,7 +328,18 @@ main{max-width:1250px}
 <button type="button" class="category-button" data-section="video-section" aria-pressed="false">🎬 動画</button>
 <button type="button" class="category-button" data-section="illustration-section" aria-pressed="false">🎨 イラスト</button>
 </nav>
-<section id="game-section" class="section"><div class="section-layout"><aside class="guide"><h3>ご利用案内</h3><p>リンクを左クリックしてください。画面右下に全画面表示ボタンがあります。ゲーム終了の際はEscを押した後、ゲームのタブを閉じてください。</p></aside><div class="section-content"><h2 class="section-title">ゲーム作品</h2><div class="toolbar"><input id="search" type="search" placeholder="作品名・作者名・ジャンルで検索" aria-label="ゲームを検索"><span id="count"></span></div><div id="games" class="work-list"></div></div>
+<section id="game-section" class="section"><div class="section-layout"><div class="left-sidebar">
+  <aside class="guide">
+    <h3>ご利用案内</h3>
+    <p>リンクを左クリックしてください。画面右下に全画面表示ボタンがあります。ゲーム終了の際はEscを押した後、ゲームのタブを閉じてください。</p>
+  </aside>
+  <aside class="guide survey-guide">
+    <h3>来場者アンケート</h3>
+    <p>展示の感想をぜひお聞かせください！</p>
+    <img src="images/QR_343059.png" alt="来場者アンケートのQRコード" class="survey-qr">
+    <p>スマートフォンでQRコードを読み取って回答してください。</p>
+  </aside>
+</div><div class="section-content"><h2 class="section-title">ゲーム作品</h2><div class="toolbar"><input id="search" type="search" placeholder="作品名・作者名・ジャンルで検索" aria-label="ゲームを検索"><span id="count"></span></div><div id="games" class="work-list"></div></div>
 
 <div class="right-sidebar">
   <aside class="guide sns-guide"></aside>
