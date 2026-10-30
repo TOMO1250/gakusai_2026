@@ -278,6 +278,12 @@ main{max-width:1250px}
 .modal-content .pdf-viewer{display:none;width:min(78vw,1000px);height:72vh;border:0;background:white;border-radius:6px}
 .modal-content .pdf-external{display:none;color:#c7d2fe;text-decoration:underline;margin:8px 0}
 @media(max-width:700px){.modal-content .pdf-viewer{width:85vw;height:68vh}}
+/* PDFもJPGと同じ拡大表示。複数ページは下の操作で移動 */
+.modal-content .modal-pdf-canvas{display:none;max-width:80vw;max-height:72vh;width:auto;height:auto;object-fit:contain;background:white}
+.pdf-page-controls{display:flex;align-items:center;justify-content:center;gap:12px;margin:8px 0;color:white}
+.pdf-page-controls[hidden]{display:none}
+.pdf-page-controls button{padding:6px 12px;border:1px solid #c7d2fe;border-radius:8px;background:#eef2ff;color:#27346a;cursor:pointer}
+.pdf-page-controls button:disabled{opacity:.45;cursor:default}
 </style>
 </head>
 <body>
@@ -330,7 +336,12 @@ main{max-width:1250px}
 
   <div class="modal-content">
     <img id="modalImage" alt="">
-    <iframe id="modalPdf" class="pdf-viewer" title="PDF作品プレビュー"></iframe>
+    <canvas id="modalPdfCanvas" class="modal-pdf-canvas" aria-label="PDF作品のページ"></canvas>
+    <div id="pdfPageControls" class="pdf-page-controls" hidden>
+      <button type="button" id="pdfPrevPage">前のページ</button>
+      <span id="pdfPageLabel"></span>
+      <button type="button" id="pdfNextPage">次のページ</button>
+    </div>
     <a id="modalPdfLink" class="pdf-external" target="_blank" rel="noopener noreferrer">PDFを別タブで開く</a>
     <p id="modalTitle"></p>
     <p id="modalAuthor"></p>
@@ -710,36 +721,89 @@ function renderGames() {
 function renderLinks(items,id,searchId,countId){const q=document.getElementById(searchId).value.trim().toLocaleLowerCase();const filtered=items.filter(item=>[item.title,item.author].some(v=>v.toLocaleLowerCase().includes(q)));const container=document.getElementById(id);container.replaceChildren();document.getElementById(countId).textContent=`${filtered.length}作品`;if(!filtered.length){container.append(el('p','','該当する作品がありません。'));return;}for(const item of filtered){const card=makeCard(item.title,item.author);card.append(makeLink(item.url));container.append(card);}}
 const modal = document.getElementById('imageModal');
 const modalImage = document.getElementById('modalImage');
-const modalPdf = document.getElementById('modalPdf');
+const modalPdfCanvas = document.getElementById('modalPdfCanvas');
 const modalPdfLink = document.getElementById('modalPdfLink');
-
+const pdfPageControls = document.getElementById('pdfPageControls');
+const pdfPageLabel = document.getElementById('pdfPageLabel');
+const pdfPrevPage = document.getElementById('pdfPrevPage');
+const pdfNextPage = document.getElementById('pdfNextPage');
+let currentPdf = null;
+let currentPdfPage = 1;
+let pdfLoadToken = 0;
 let currentImageIndex = 0;
 let displayedIllustrations = illustrations;
 
-function illustrationPath(item) {
-    return item.pdf || item.image || '';
-}
-function isPdfIllustration(item) {
-    return /\.pdf(?:[?#].*)?$/i.test(illustrationPath(item));
-}
+function illustrationPath(item) { return item.pdf || item.image || ''; }
+function isPdfIllustration(item) { return /\.pdf(?:[?#].*)?$/i.test(illustrationPath(item)); }
 
-// PNG/JPGとPDFを共通のモーダルで表示
+async function renderModalPdfPage(token) {
+    if (!currentPdf || token !== pdfLoadToken) return;
+    try {
+        const page = await currentPdf.getPage(currentPdfPage);
+        if (token !== pdfLoadToken) return;
+        const base = page.getViewport({scale:1});
+        const scale = Math.min(2.5, (window.innerWidth * .78) / base.width,
+                               (window.innerHeight * .72) / base.height);
+        const viewport = page.getViewport({scale:Math.max(.1,scale)});
+        const temp = document.createElement('canvas');
+        temp.width = Math.ceil(viewport.width);
+        temp.height = Math.ceil(viewport.height);
+        await page.render({canvasContext:temp.getContext('2d'),viewport}).promise;
+        if (token !== pdfLoadToken) return;
+        modalPdfCanvas.width = temp.width;
+        modalPdfCanvas.height = temp.height;
+        modalPdfCanvas.getContext('2d').drawImage(temp,0,0);
+        pdfPageLabel.textContent = `${currentPdfPage} / ${currentPdf.numPages} ページ`;
+        pdfPrevPage.disabled = currentPdfPage <= 1;
+        pdfNextPage.disabled = currentPdfPage >= currentPdf.numPages;
+        pdfPageControls.hidden = currentPdf.numPages <= 1;
+    } catch (error) {
+        if (token === pdfLoadToken) pdfPageLabel.textContent = 'PDFページを表示できませんでした';
+        console.error('PDF拡大表示エラー:',error);
+    }
+}
+async function openModalPdf(path,token) {
+    try {
+        if (!window.pdfjsLib) throw new Error('PDF.jsを読み込めませんでした');
+        const pdf = await pdfjsLib.getDocument({url:encodeURI(path)}).promise;
+        if (token !== pdfLoadToken) { pdf.destroy(); return; }
+        currentPdf = pdf;
+        currentPdfPage = 1;
+        await renderModalPdfPage(token);
+    } catch(error) {
+        if (token === pdfLoadToken) {
+            pdfPageControls.hidden = false;
+            pdfPageLabel.textContent = 'PDFを表示できません。下のリンクから開いてください。';
+            pdfPrevPage.hidden = true;
+            pdfNextPage.hidden = true;
+        }
+        console.error('PDF読み込みエラー:',error);
+    }
+}
+function clearModalPdf() {
+    ++pdfLoadToken;
+    if (currentPdf) { currentPdf.destroy(); currentPdf = null; }
+    pdfPageControls.hidden = true;
+    pdfPrevPage.hidden = false;
+    pdfNextPage.hidden = false;
+    modalPdfCanvas.width = 0;
+    modalPdfCanvas.height = 0;
+}
 function showImage(index) {
-    if (displayedIllustrations.length === 0) return;
+    if (!displayedIllustrations.length) return;
+    clearModalPdf();
     currentImageIndex = (index + displayedIllustrations.length) % displayedIllustrations.length;
     const item = displayedIllustrations[currentImageIndex];
     const path = illustrationPath(item);
-    const pdf = isPdfIllustration(item);
-
-    modalImage.style.display = pdf ? 'none' : 'block';
-    modalPdf.style.display = pdf ? 'block' : 'none';
-    modalPdfLink.style.display = pdf ? 'inline-block' : 'none';
-    if (pdf) {
+    const isPdf = isPdfIllustration(item);
+    modalImage.style.display = isPdf ? 'none' : 'block';
+    modalPdfCanvas.style.display = isPdf ? 'block' : 'none';
+    modalPdfLink.style.display = isPdf ? 'inline-block' : 'none';
+    if (isPdf) {
         modalImage.removeAttribute('src');
-        modalPdf.src = encodeURI(path);
         modalPdfLink.href = encodeURI(path);
+        openModalPdf(path,pdfLoadToken);
     } else {
-        modalPdf.removeAttribute('src');
         modalPdfLink.removeAttribute('href');
         modalImage.src = encodeURI(path);
         modalImage.alt = item.title;
@@ -747,11 +811,13 @@ function showImage(index) {
     document.getElementById('modalTitle').textContent = item.title;
     document.getElementById('modalAuthor').textContent = `作者：${item.author}`;
 }
-
-// 閉じたときPDFの読み込みを停止
-modal.addEventListener('close', () => {
-    modalPdf.removeAttribute('src');
+pdfPrevPage.addEventListener('click',()=>{
+    if(currentPdf && currentPdfPage>1){currentPdfPage--;renderModalPdfPage(pdfLoadToken);}
 });
+pdfNextPage.addEventListener('click',()=>{
+    if(currentPdf && currentPdfPage<currentPdf.numPages){currentPdfPage++;renderModalPdfPage(pdfLoadToken);}
+});
+modal.addEventListener('close',clearModalPdf);
 
 // 次のイラスト
 function nextImage() {
