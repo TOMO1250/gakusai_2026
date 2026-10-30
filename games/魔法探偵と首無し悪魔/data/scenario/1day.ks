@@ -5,29 +5,32 @@
 [bg storage="dark.jpg" wait=true]
 [layopt layer=message0 visible=true]
 12月18日午前6時5分[r]
-（[ruby text="こ"]孤[ruby text="ご"]御[ruby text="え"]影[ruby text="かすれ"]掠の死体発見2時間前――――――）[p]
+（[ruby text="こ"]孤[ruby text="ご"]御[ruby text="え"]影 [ruby text="かすれ"]掠の死体発見2時間前――――――）[p]
 
 
 ;システムボタンを表示する
 [add_theme_button]
+[popopo]
+[playbgm storage="08mosikasite.mp3" volume="80"]
 [mask time="500"]
 [layopt layer="0" visible="true"]
 [bg storage="juutaku.jpg" time="0"]
 [image layer="0" storage="b_haikei.png" x="-100" y="-80" wait="true"]
-[playbgm storage="01sinzou"]
 [chara_show name="byakuya" time="0" face="kanasimi2" layer="1"left="600"]  
+
 [mask_off]
 #byakuya
 はぁ……、まだ真っ暗だよ。[r]
 こんな朝早くに出なくても……。[p]
 
 
+
 [chara_in]
 [freeimage layer="0"]
 [layopt layer="0" visible="true"]
-[image layer="0" storage="u_haikei.png" x="-100" y="-80" wait="true" time="0"]
+[image layer="0" storage="u_haikei.png" x="200" y="-80" wait="true" time="0"]
 [chara_hide name="byakuya" layer="1" time="0"]
-[chara_show name="usagi" layer="1" face="yorokobi" time="0" left="600"]
+[chara_show name="usagi" layer="1" face="yorokobi" time="0" left="-50"]
 
 [chara_off]
 #usagi
@@ -40,8 +43,7 @@
 
 [chara_in]
 [freeimage layer="0"]
-[chara_hide name="usagi" layer="1" time="0"]
-[chara_show name="byakuya" layer="1" time="0" face="akire"]
+[chara_show name="byakuya" layer="1" time="0" face="akire" left="600"]
 [chara_off]
 
 #byakuya
@@ -53,9 +55,10 @@
 
 [freeimage layer="0"]
 [layopt layer="0" visible="true"]
+[chara_hide name="usagi" layer="1" time="0"]
 [chara_hide name="byakuya" layer="1" time="0"]
-[image layer="0" storage="h_haikei.png" x="-100" y="-80" wait="true" time="0"]
-[chara_show name="hutatsu" layer="1" face="yorokobi" time="0" left="600"]
+[image layer="0" storage="h_haikei.png" x="200" y="-80" wait="true" time="0"]
+[chara_show name="hutatsu" layer="1" face="yorokobi" time="0" left="-50"]
 [chara_off]
 #hutatsu
 エモいかどうかは分からんが……。[r]
@@ -68,14 +71,15 @@
 [chara_in]
 [freeimage layer="0"]
 [chara_hide name="hutatsu" layer="1" time="0"]
-[chara_show name="byakuya" face="kanasimi2" time="0"]
+[chara_show name="byakuya" face="kanasimi2" time="0" left="600"]
 [chara_off]
 
 #byakuya
 [ruby text="こ"]孤[ruby text="ご"]御[ruby text="え"]影[ruby text="こおり"]冰、です。[r]
 名前すらうろ覚えなのに何を楽しみにしてんですか……。[p]
 
-[chara_show name="usagi" face="yorokobi" ] 
+[chara_show name="usagi"  laft="100"] 
+
 
 #usagi
 ふふ……、甘いね月食くん。[r]
@@ -86,6 +90,8 @@
 どこって、冰ちゃんのお父さん、[r]
 孤御影掠さんの別荘だろ？　それが何か？[p]
 
+
+[u_yo]
 #usagi
 別荘を持っている程の金持ちが開く誕生日会だよ！？[r]
 絶対に豪華なご飯とか用意されてるに決まってるじゃん！[p]
@@ -95,11 +101,11 @@
 く、食い物が目当てかよ……。[r]
 まさか兩月さんも……？[p]
 
-[chara_show name="hutatsu" face="kanasimi"]
+[chara_show name="hutatsu" face="kanasimi" ]
 #hutatsu
 いや、アタシは単に面白そうだから来ただけ。[r]
 食べ物は、そんなにかな……。[p]
-
+[u_odo]
 #usagi
 えっ食事目当てじゃないの！？[r]
 梯子を外されちゃったよ！！[p]
@@ -108,10 +114,10 @@
 お前が勝手に架けようとしただけだろ。[p]
 
 [chara_in]
-[chara_hide_all]
+[chara_hide_all time="0"]
 [layopt layer="0" visible="true"]
-[image layer="0" storage="a_haikei.png" x="-100" y="-80" wait="true" time="0"] 
-[chara_show name="akebono" layer="1" face="yorokobi" time="0" left="600"]
+[image layer="0" storage="a_haikei.png" x="200" y="-80" wait="true" time="0"] 
+[chara_show name="akebono" layer="1" face="yorokobi" time="0" left="-50"]
 [chara_off]
 #akebono
 楽しそうに会話している所悪いけど、[r]
@@ -120,12 +126,12 @@
 [chara_in]
 [chara_hide name="akebono" layer="1" time="0"]
 [freeimage layer="0"]
-[chara_show name="hutatsu" layer="1" time="0"]
+[chara_show name="byakuya" face="kanasimi2" time="0" layer="1" left="600"]
+[chara_show name="hutatsu" layer="1" time="0" left="100"]
 [chara_off]
 #hutatsu
 あっ、そうですね。[r]
 運転お願いします、曙さん。[p]
-
 
 #byakuya
 ……くれぐれも事故らないようにな。[p]
@@ -133,8 +139,8 @@
 
 ;暗転
 [mask effect="fadeIn" time="600"]
-[chara_hide_all time="0"] 
-[chara_hide name="akebono" layer="1" time="0"]
+[fadeoutbgm]
+[chara_hide name="byakuya" layer="1" time="0"]
 [chara_hide name="hutatsu" layer="1" time="0"]
 [layopt layer="0" visible="true"]
 [bg storage="dark.jpg"]
@@ -148,8 +154,8 @@
 
 ;暗転解除
 [bg storage="ousetsuma.png"]
-[chara_show name="koori"  layer="1" left="600" wait="false"]
-[image layer="0" storage="k_haikei.png" x="-100" y="-80" wait="true"]
+[chara_show name="koori"  layer="1" left="-50" wait="false"]
+[image layer="0" storage="k_haikei.png" x="200" y="-80" wait="true"]
 #koori
 あ……び、白夜さん…………[p]
 
@@ -157,10 +163,10 @@
 [chara_hide name="koori" layer="1" time="0"]
 [freelayer layer="0"]
 [layopt layer="0" visible="true"]
-[chara_show name="byakuya" face="akire" time="0"]
+[chara_show name="byakuya" face="akire" time="0" left="600"]
 [chara_off]
 #byakuya
-え……、掠さんが……死んでる……！？[p]
+え……、掠さんが、死んでる……！？[p]
  
 ;暗転
 [mask effect="fadeIn" time="300"]
@@ -187,7 +193,9 @@
 [bg storage="entrance.png" time="0"]
 [layopt layer=message0 visible=true]
 [free_filter]
-[chara_show name="akebono" face="kanasimi" time="0"]
+[chara_show name="byakuya" face="sinken" time="0" left="600"]
+[chara_show name="akebono" face="kanasimi" time="0" left="1"]
+[fadeinbgm storage="04rasen.mp3"]
 [mask_off time="500"]
 
 #akebono
@@ -198,32 +206,27 @@
 前方に道、後方には山。[r]
 ――――少なくとも後方の山は、大雨で進むのは危険だろうね。[p]
 
-[chara_in]
-[a_hide]
-[chara_show name="byakuya" face="sinken" time="0"]
-[chara_off]
+
+
 #byakuya
 ……………………………………。[p]
 
-[chara_in]
-[b_hide]
-[chara_show name="koori" face="kanasimi"time="0"]
-[chara_off]
+
+[chara_show name="koori" face="kanasimi"]
 #koori
 ――――――――――――――――――――[p]
 [chara_in]
-[chara_show name="hutatsu" face="kanasimi" time="0"]
+[a_hide]
 [k_hide]
+[chara_show name="hutatsu" face="kanasimi" time="0"]
 [chara_off]
 #hutatsu
 前方の道も、土砂崩れが発生していた。[r]
 こっちも進むのは不可能だ。[p]
 
 
-[chara_in]
-[h_hide]
-[chara_show name="usagi" face="odoroki" time="0"]
-[chara_off]
+
+[chara_show name="usagi" face="odoroki" ]
 #usagi
 …………さっき警察に連絡しようとしたけど、[r]
 何故かスマホがショートしちゃいました……。[p]
@@ -234,27 +237,22 @@
 
 [chara_in]
 [u_hide]
+[h_hide]
 [chara_show name="akebono" face="kanasimi" time="0"]
 [chara_off]
 #akebono
 …………とにかく、外への連絡手段は存在しない。[r]
-畢竟、ここは、陸の孤島と化したんだ。[p]
+畢竟、ここは陸の孤島と化したんだ。[p]
 
-[chara_in]
-[a_hide]
-[chara_show name="byakuya" face="sinken" time="0"]
-[chara_off]
 #byakuya
 …………おい親父、[r]
 掠さんの状態はどうなんだ？[p]
-
-
-[chara_show name="akebono" face="kanasimi" time="0"]
 
 #akebono
 首が切られて、その首がどこにも無いこと以外、[r]
 恐ろしく綺麗なままだ。抵抗した跡もない。[p]
 
+[a_aki]
 #akebono
 後ろから、不意を突かれて首を切られたのかな……。[r]
 きっと声をあげる間もなかっただろうね。[p]
@@ -265,7 +263,7 @@
 
 [chara_in]
 [a_hide]
-[chara_show name="byakuya" face="sinken" time="0"]
+[chara_show name="byakuya" face="kanasimi" time="0"]
 [chara_off]
 #byakuya
 ………………この館の周りには、[r]
@@ -275,6 +273,7 @@
 ――――つまり、[r]
 外から誰かがやってきた可能性はゼロに近い。[p]
 
+[b_ika]
 #byakuya
 そうなると、犯人は一人しか考えられない！[r]
 その犯人とは―――――[p]
@@ -312,17 +311,13 @@
 #byakuya
 君以外にありえない――――冰ちゃん。[p]
 
-[chara_in]
-[chara_hide name="byakuya" time="0"wait="false"]
-[chara_show name="koori"  time="0" wait="false"]
-[chara_off]
+[chara_show name="koori" ]
 #koori
 えっ………………………[p]
 
-[chara_in]
-[k_hide]
-[chara_show name="hutatsu" face="ikari"time="0" wait="false"]
-[chara_off]
+
+[chara_show name="hutatsu" face="ikari"]
+
 #hutatsu
 ち、ちょっと待てよ白夜！！[r]
 冰ちゃんは掠さんの娘だぞ！[p]
@@ -332,18 +327,13 @@
 そんなこと…………。[p]
 
 [chara_in]
-[chara_hide name="koori" time="0" wait="false"]
-[chara_hide name="hutatsu" time="0" wait="false"]
-[chara_show name="usagi" time="0"　face="kanasimi" wait="false"]
+[h_hide]
+[chara_show name="usagi" time="0"　face="kanasimi"]
 [chara_off]
 #usagi
 ……家族だからこそ、[r]
 憎らしく思うことだってあると思います。[p]
 
-[chara_in]
-[u_hide]
-[chara_show name="byakuya"  face="sinken" time="0" wait="false"]
-[chara_off]
 #byakuya
 「不可能なものを全て除外して、最後に残ったものが
 どれほど信じられなくてもそれが真実である」[p]
@@ -352,11 +342,17 @@
 冰ちゃんは事件発生時、この屋敷にいたはずだ。[r]
 そして、僕達以外に入ってきた人はいない。[p]
 
+[b_ika]
 #byakuya
 だとしたら、[r]
-もう彼女以外に犯人はいないじゃないか。[p]
+もう彼女以外に犯人はいないじゃないか！[p]
 
-[chara_show name="akebono" face="kanasimi" ]
+[chara_in]
+[k_hide]
+[u_hide]
+[h_hide]
+[chara_show name="akebono" face="kanasimi" time="0"]
+[chara_off]
 
 #akebono
 ――――待った。大した証拠もないのに、[r]
@@ -382,19 +378,13 @@
 …………そうだね、[r]
 ここは一つ、冰ちゃんに話を聞いてみないかい？[p]
 
-[chara_in]
-[b_hide]
-[a_hide]
-[chara_show name="koori" time="0" wait="false"]
-[chara_off]
+[chara_show name="koori" face="akire"]
+
 #koori
 ……………え、私……ですか？[p]
 
 
-[chara_in]
-[k_hide]
-[chara_show name="byakuya" face="kanasimi" time="0"]
-[chara_off]
+
 #byakuya
 …………分かったよ。[b_sin]冰ちゃん、[r]
 掠さんの死体を発見するまでの間、何をしていたんだ？[p]
@@ -408,16 +398,14 @@
 それを思い出させるようなことは[r]
 今はやめた方がいいんじゃないか？[p]
 
-[chara_in]
-[h_hide]
-[b_hide]
-[chara_show name="koori" time="0"]
-[chara_off]
 #koori
 …………気遣いありがとうございます……。[r]
 でも……、大丈夫です。[p]
 
-[k_aki]
+[chara_in]
+[h_hide]
+[chara_off]
+
 #koori
 ……その、この別荘ってしばらく使ってないので[r]
 一昨日からここに来て、お父さんと掃除をしていたんです。[p]
@@ -426,25 +414,16 @@
 それで、今日それが終わった後、[r]
 お父さんはここで、私は二階の部屋でくつろいでいました。[p]
 
-[chara_in]
-[k_hide]
-[chara_show name="byakuya" face="sinken" time="0"]
-[chara_off]
 #byakuya
 成程、その時に殺されたと考えるのが妥当か――――[p]
 
-[chara_in]
-[b_hide]
-[chara_show name="akebono" time="0"]
-[chara_off]
+[chara_show name="akebono" ]
+
 #akebono
 ……僕からも一つ聞いていいかな？　冰ちゃん。[r]
 君は、いつ掠の死体を発見したんだい？[p]
 
-[chara_in]
-[a_hide]
-[chara_show name="koori" face="kanasimi" time="0"]
-[chara_off]
+[k_kan]
 #koori
 えっ…………と……、下から叫び声が[r]
 聞こえたので気になって降りてみたら――――[p]
@@ -453,25 +432,32 @@
 といった感じなので、お父さんが殺されてから[r]
 あまり時間は経っていないかと。[p]
 
-[chara_in]
-[k_hide]
-[chara_show name="byakuya" face="ikari" time="0"]
-[chara_off]
 #byakuya
 （叫び声が聞こえた……？）[p]
+
+
+[mask time="10" color="#ffff"]
+[chara_hide_all time="0" layer="1"]
+[layopt layer="2" visible="true"]
+[stopbgm]
+[playse storage="hirameku.mp3"]
+[image layer="2" storage="b_kattoin.png" visible="true" x="-300" y="-100" wait="true" time="0" width="1920" height="652"]
+[mask_off time="10"]
+[wait time="1000"]
+[mask time="10" color="#ffff"]
+[freeimage layer="2" wait="true"]
+[fadeinbgm storage="07syukuteki.mp3"]
+[mask_off time="10"]
+
 
 #byakuya
 ――――――――――――――！！　ちょっと待て！[r]
 冰ちゃん、今の話には大きな矛盾がある！[p]
 
-[chara_show name="koori" face="kanasimi"]
+
 #koori
 …………！！[p]
 
-[chara_in]
-[k_hide]
-[chara_show name="akebono" face="kanasimi" time="0"]
-[chara_off]
 #akebono
 ………………素直に話を聞いてると思ったら、[r]
 そんなこと考えてたの？[p]
@@ -543,6 +529,7 @@
 [layopt layer="message0" visible="true"]
 [layopt layer="fix" visible="true"]
 [layopt layer="0"]
+[chara_show name="byakuya" face="sinken" time="0"]
 [chara_show name="koori" time="0" ]
 [bg storage="entrance.png"]
 [chara_off]
@@ -550,52 +537,39 @@
 #koori
 ………………………………？[p]
 
-[chara_in]
-[k_hide]
-[chara_show name="hutatsu" face="kanasimi" time="0"]
-[chara_off]
+
+[chara_show name="hutatsu" face="kanasimi" ]
 #hutatsu
 えーっと……それのどこが矛盾しているんだ？[p]
 
-[chara_in]
-[h_hide]
-[chara_show name="byakuya" face="kanasimi2" time="0"]
-[chara_off]
 #byakuya
 …………して、いませんね。[p]
 
-[chara_in]
-[b_hide]
-[chara_show name="hutatsu" face="kanasimi" time="0"]
-[chara_off]
 #hutatsu
 ……………………次は、ちゃんとしろよ。[p]
 
-[chara_in]
-[h_hide]
-[chara_show name="byakuya" face="kanasimi2" time="0"]
-[chara_off]
 #byakuya
-はい……[r]
+はい……。[p]
+
+#byakuya
 （くそ、もう一回だ！　冰ちゃんと親父の発言に[r]
 矛盾が必ずあるんだ……それは――――）[p]
 @jump target="*ktalk"
 
 *ktalk2
-
-
-[mask time="10" color="#ffff"]
-[chara_hide_all time="0" ]
-[layopt layer="2" visible="true"]
-[layopt layer="0" visible="falt"]
-[image layer="2" storage="b_kattoin.png" visible="true" x="-300" y="-100" wait="true" time="0" width="1920" height="652"]
-[mask_off time="10"]
-[wait time="1000"]
-[mask time="10" color="#ffff"]
-[freeimage layer="2" wait="true"]
+[cm]
+[chara_in]
+[freeimage layer="2"]
+[freeimage layer="0"]
 [layopt layer="message0" visible="true"]
+[layopt layer="fix" visible="true"]
+[layopt layer="0"]
 [chara_show name="byakuya" face="sinken" time="0"]
-[mask_off time="10"]
+[chara_show name="koori" time="0" ]
+[bg storage="entrance.png"]
+[fadeinbgm storage="syukuteki.mp3"]
+[chara_off]
+
 
 #byakuya
 親父はこう言った。[r]
@@ -624,6 +598,7 @@
 [b_hide]
 [k_hide]
 [chara_show name="akebono" face="kanasimi" time="0" wait="false"]
+[stopbgm]
 [chara_off]
 #akebono
 その推理、ちょっと待った。[p]
@@ -634,17 +609,17 @@
 
 [chara_in]
 [a_hide]
-[chara_show name="byakuya"face="sinken" time="0" ]
+[chara_show name="byakuya"face="sinken" time="0" wait="false"]
+[chara_show name="akebono" face="kanasimi" time="0"]
 [chara_off]
 
 #byakuya
 ……瑕疵、だと？[r]
 一体どこにそんなのが……。[p]
 
-[chara_in]
-[b_hide]
-[chara_show name="usagi" face="odoroki" time="0"]
-[chara_off]
+
+[chara_show name="usagi" face="odoroki" ]
+
 
 #usagi
 そ、そうですよ。[r]
@@ -656,8 +631,9 @@
 
 [chara_in]
 [u_hide]
-[chara_show name="akebono" face="yorokobi" time="0"]
+[playbgm storage="02meikyuu.mp3"]
 [chara_off]
+[a_no]
 #akebono
 それは違うよ、十六夜ちゃん。[r]
 冰ちゃんの服や体には返り血が一切ついてないから。[p]
@@ -671,16 +647,10 @@
 何か装置、もしくは凶器を使ったとしても、[r]
 僕達が来るまでの十数分じゃそれを隠すことは難しい。[p]
 
-[chara_in]
-[u_hide]
-[a_hide]
-[chara_show name="byakuya" face="sinken" time="0" wait="false"]
-[chara_off]
 
 #byakuya
 ……それで、僕が言った矛盾はどう説明するんだ？[p]
 
-[chara_show name="akebono"]
 #akebono
 そんなものは、どうとでも説明が出来る。[p]
 
@@ -688,18 +658,21 @@
 例えば、スマホの変成機アプリを使って、[r]
 掠に近い声を出した……、とかね。[p]
 
-[chara_show name="hutatsu" face="odoroki"]
+[chara_show name="hutatsu" face="kanasimi"]
 #hutatsu
 ……つまり、犯人は掠さんを殺した後、[r]
 自ら叫び声を上げたってことですか？[p]
 
 #akebono
 その通りだ。目的は、[r]
-二階にいる冰ちゃんを死体の側まで近づけさせるため。[p]
+二階にいる冰ちゃんを死体の側まで近づけさせること。[p]
 
 #akebono
-つまり、冰ちゃんを犯人だと思わせるため！[p]
+つまり、冰ちゃんを犯人だと思わせるため……！[p]
 
+[chara_in]
+[h_hide]
+[chara_off]
 #akebono
 ――――ほら、白夜。[r]
 君は賢いんだから、考えてごらん。[p]
@@ -708,11 +681,6 @@
 冰ちゃんは犯人じゃない。当然、僕達も違う。[r]
 それでは、誰が掠を殺した？[p]
 
-
-[chara_in] 
-[a_hide]
-[chara_show name="byakuya" face="sinken" time="0"]
-[chara_off]
 
 #byakuya
 …………………………………………[p]
@@ -762,6 +730,7 @@
 [layopt layer="message0" visible="true"]
 [layopt layer="fix" visible="true"]
 [chara_show name="byakuya" face="sinken" time="0"]
+[fadeinbgm storage="04rasen.mp3"]
 [chara_off]
 
 #byakuya
@@ -772,11 +741,8 @@
 その通りだ。やればできるじゃないか。[r]
 ……もっと早くその答えにたどり着いていれば、だが。[p]
 
-[chara_in]
-[b_hide]
-[a_hide]
-[chara_show name="hutatsu" face="kanasimi" time="0"]
-[chara_off]
+
+[chara_show name="hutatsu" face="kanasimi"]
 #hutatsu
 で、でも……。ここに来た車は無く、[r]
 雨のせいで徒歩で来ることも困難という話でしたよね？[p]
@@ -784,11 +750,6 @@
 #hutatsu
 犯人はどうやってこの館に来たというんですか？[p]
 
-[chara_in]
-[h_hide]
-[b_hide]
-[chara_show name="akebono" time="0"]
-[chara_off]
 
 #akebono
 それは、犯人が今日ここに来た場合にだけ言えることだろう？[p]
@@ -803,27 +764,21 @@
  
 
 [chara_in]
-[a_hide]
+[h_hide]
 [chara_show name="usagi" face="odoroki" time="0"]
 [chara_off]
 #usagi
 ええっ！？　いや、でもずっと隠れるなんて、出来るわけ……[p]
 
-[chara_in]
-[u_hide]
-[chara_show name="akebono" time="0"]
-[chara_off]
+
+
 #akebono
 この別荘はかなり広い。それなのに、訪れるのはせいぜい数人。[r]
 隠れる場所なんていくらでもあると思うよ。[p]
 
-[chara_in]
-[a_hide]
-[chara_show name="usagi" face="odoroki" time="0"]
-[chara_off]
 #usagi
 ……だ、だったら、犯人は掠さんを殺した後[r]
-どうしたんですか？[r]
+どうしたんですか？[p]
 
 #usagi
 この大雨の中徒歩で逃げるなんて、[r]
@@ -832,7 +787,6 @@
 
 [chara_in]
 [u_hide]
-[chara_show name="byakuya"  face="kanasimi" time="0"]
 [chara_off]
 #byakuya
 …………だったら逃げなければいい。[p]
@@ -844,7 +798,7 @@
 #byakuya
 ――――――そういう事だろ、親父？[p]
 
-[chara_show name="akebono" face="yorokobi"]
+[a_yo]
 #akebono
 ――――ふふっ。[r]
 花丸だよ、白夜くん。[p]
@@ -854,7 +808,7 @@
 何度も言うように[r]
 一人でこの答を出せたら、だけどね。[p]
 
-
+[b_kan]
 #byakuya
 ……………………………[p]
 
@@ -867,7 +821,7 @@
 皆は、そうだね……、二階に上がってほしい。[p]
 恐らく、犯人は一階に隠れているから。[p]
 
-[chara_show name="koori" face="odoroki"]
+[chara_show name="koori" face="akire"]
 #koori
 ど、どうして分かるですか？[p]
 
@@ -881,18 +835,13 @@
 
 [chara_in]
 [k_hide]
-[b_hide]
-[a_hide]
 [chara_show name="hutatsu" face="kanasimi" time="0"]
 [chara_off]
 #hutatsu
 ……アタシ達がこうして話している最中に、[r]
 二階に上がった可能性もあるんじゃないですか？[p]
 
-[chara_in]
-[h_hide]
-[chara_show name="akebono" time="0"]
-[chara_off]
+
 #akebono
 もしそうだとしたら、君や僕の鼓膜が[r]
 階段を昇る足音を聞いていない筈がない。[p]
@@ -901,14 +850,14 @@
 とにかく、皆は大人しく待って――――――[p]
 
 [chara_in]
-[a_hide]
-[chara_show name="byakuya" face="ikari" time="0"]
+[h_hide]
+[b_ika]
 [chara_off]
 #byakuya
 ふざけるな！　僕だって探偵だ！[r]
 何でお前一人だけで事件の捜査をするんだよ！[p]
 
-[chara_show name="akebono" face="kanasimi"]
+[a_kan]
 #akebono
 …………分からないのかい？　事件を解決しようと動くのはね、[r]
 危ないんだよ。[p]
@@ -920,7 +869,6 @@
 #byakuya
 なっ…………、[r]
 探偵ごっこだと！？[p]
-
 
 #akebono
 違うのかい？[r]
@@ -941,6 +889,7 @@
 [b_hide]
 [m_message]
 [bg storage="dark.jpg" time="0"]
+[stopbgm]
 [mask_off]
 
 #
@@ -955,23 +904,22 @@
 #byakuya
 な、なんだこの声は……！？[p]
 
-[chara_in]
-[b_hide]
-[chara_show name="hutatsu" face="akire" time="0"]
-[chara_off]
+
+[chara_show name="hutatsu" face="akire" ]
 #hutatsu
 声……？[p]
 
-[chara_in]
-[h_hide]
-[chara_show name="usagi" face="odoroki" time="0"]
-[chara_off]
+
+[chara_show name="usagi" face="odoroki" ]
+
 #usagi
 そんなの、聞こえないけど……[p]
 
 [chara_in]
 [u_hide]
-[chara_show name="byakuya" face="kanasimi2" time="0"]
+[h_hide]
+[chara_mod name="byakuya" face="kanasimi2" time="0"]
+[chara_off]
 [m_message]
 #
 ホウ……一人、[r]
@@ -979,6 +927,7 @@
 
 
 [normal_message]
+
 [b_ika]
 #byakuya
 な、なんだ！！　何が面白い！！[r]
@@ -1002,13 +951,14 @@
 [layopt layer="message0" visible="true"]
 [layopt layer="fix" visible="true"]
 [freeimage layer="0"]
+[chara_show name="byakuya" face="sinken" time="0"]
 [chara_show name="hutatsu" face="akire" time="0" ]
 [bg storage="entrance.png" time="0"]
 [chara_off]
 #hutatsu
 えっ、アタシ！？[p]
 
-[chara_show name="byakuya" face="sinken"]
+
 #byakuya
 兩月さん……貴方はその類まれなる筋力で[r]
 掠さんを殺した……違いますか？[p]
@@ -1043,13 +993,13 @@
 [layopt layer="message0" visible="true"]
 [layopt layer="fix" visible="true"]
 [freeimage layer="0"]
+[chara_show name="byakuya" face="ikari" time="0"]
 [chara_show name="akebono" face="akire" time="0"]
 [bg storage="entrance.png" time="0"]
 [chara_off]
 #akebono
 …………は？　どうして僕が犯人になるのかな？[p]
 
-[chara_show name="byakuya" face="ikari" time="10"]
 #byakuya
 そんなの、僕に分かるか！！ なんとなくムカつくから犯人だ！[p]
 
@@ -1073,19 +1023,20 @@
 [layopt layer="message0" visible="true"]
 [layopt layer="fix" visible="true"]
 [freeimage layer="0"]
+[chara_show name="byakuya" face="sinken" time="0"]
 [chara_show name="usagi" face="odoroki" time="0"]
 [bg storage="entrance.png" time="0"]
 [chara_off]
 #usagi
 わ、私が犯人……？　な、なんで…………？[p]
 
-[chara_show name="byakuya" face="sinken"]
+
 #byakuya
 …………理由は、分からない。直観というやつかな。名探偵としての。[p]
 
 [chara_show name="akebono" face="akire"]
 #akebono
-信用ならないねぇー……それで、名探偵クン？[r]
+信用ならないねぇー……それで、名探偵？[r]
 十六夜ちゃんには確固たるアリバイがあるんだけど、[p]
 
 #akebono
@@ -1121,16 +1072,17 @@
 えぇ…………。[p]
 
 #byakuya
-僕に自覚がないだけで、例えば寝ている時にもう一人の僕が殺人を――――――[p]
+僕に自覚がないだけで、[r]
+例えば寝ている時にもう一人の僕が殺人を――――――[p]
 
 [chara_show name="usagi" face="odoroki"]
 #usagi
-いやいやそんな監禁される時の夜神月みたいなこと言わなくても、[r]
-そんなのあり得ないよ。[p]
+いやいやそんな夜神月みたいなこと言わないでよ。[r]
+そんなのあり得ないし。[p]
 
 [b_ika]
 #byakuya
-なんであり得ないって言えるんだ！　漫画で聞いたぞ！[r]
+なんであり得ないって言えるんだ！　ハガレンで聞いたぞ！[r]
 あり得ないなんてことはあり得ないって……！[p]
 
 #usagi
@@ -1141,7 +1093,8 @@
 
 [b_kan]
 #byakuya
-（クソ！　もう一回だ……！　掠さんを殺した犯人は―――――――）[p]
+（……確かにそうだ。僕は何でこんなバカなことを……。[r]
+はぁ……。掠さんを殺した犯人は―――――――）[p]
 
 @jump target="*suiri"
 
@@ -1158,7 +1111,7 @@
 #byakuya
 ……実は、自殺だった、とか。[p]
 
-[chara_show name="hutatsu" face="odoroki"]
+[chara_show name="hutatsu" face="kanasimi"]
 #hutatsu
 ………………どうやって自分の首を切るんだよ？[p]
 
@@ -1171,6 +1124,7 @@
 ;---------------------------------------------
 *mitsuba
 [wait time="2000"]
+[fadeinbgm storage="09tumugu.mp3"]
 #
 ―――――――――――――――――――――――――――[p]
 
@@ -1193,7 +1147,7 @@
 それに、そんなの使わなくたって誰にも分かるわ。[p]
 
 #
-だって、白夜……、謎を解こうっていうのに[r]
+だって、貴方……、謎を解こうっていうのに[r]
 悲しそうな顔をしているもの。[p]
 
 #byakuya
@@ -1223,6 +1177,7 @@
 [mask time="0"]
 [bg storage="heya4_4.png" time="0"]
 [chara_show name="byakuya" face="ikari" time="0"]
+[fadeoutbgm]
 [mask_off time="10"]
 
 #byakuya
@@ -1232,6 +1187,7 @@
 #byakuya
 ……さっきのは……、夢か……。[p]
 
+[fadeinbgm storage="02kataru.mp3"]
 [chara_show name="hutatsu"]
 #hutatsu
 おっ、やっと起きたな。心配したんだぞ？[r]
@@ -1249,6 +1205,7 @@
 ……僕の、部屋？[r]
 孤御影家の別荘ですよね？　ここ……。[p]
 
+[image storage="kannaizu2.png" layer="1" x="1" y="1" width="1270" height="720"time="200"]
 #hutatsu
 ここを出るまでの間、[r]
 アタシ達が寝る部屋をこんな感じに割り振ったんだ。[p]
@@ -1257,6 +1214,8 @@
 ……成程、確かにこの雨じゃ、[r]
 しばらくはここで泊まるしかないか……。[p]
 
+
+[layopt layer="1" visible="false"]
 [b_sin]
 #byakuya
 だったら、この事件を解決しないと……、[r]
@@ -1285,7 +1244,7 @@
 #hutatsu
 ……お前よりも、曙さんの方が早く解決出来るとしても？[p]
 
-[b_sin]
+
 #byakuya
 ……………………！[p]
 
@@ -1294,6 +1253,7 @@
 はっ、いや……ごめん、失言だった。[r]
 [h_no]うん……、頑張れよ。私も出来るだけ力を貸すから。[p]
 
+[b_kan2]
 #byakuya
 ………………はい、ありがとうございます……。[p]
 
@@ -1313,7 +1273,7 @@
 [b_kan]
 #byakuya
 そう、ですね……。[r]
-確かにあれは失敗でした……。[p]
+確かに、あれは失敗でした……。[p]
 
 #hutatsu
 …………失敗を認められたら、成功は近いさ。[r]
@@ -1352,10 +1312,11 @@
 それでも、僕が行動しない理由にはならないだろ。[p]
 
 #byakuya
-……僕は、名探偵になるって決めたんだ……。あの日から。[r]
-だったら、行動……しないと……。[p]
+……僕は、名探偵になるって決めたんだ……。[r]
+絶対に、事件を解決ないと……！[p]
 
 [m_message]
+[stopbgm]
 #
 クククククッ……。[r]
 その決意、ボクには背伸びにしか見エなイぜ？[p]
@@ -1389,11 +1350,12 @@
 
 [wait time="800"]
 [chara_in]
-[bg storage="5_4.png" time="0"]
+[bg storage="heya4_4.png" time="0"]
 [chara_hide name="mamo" tim="0"]
 [chara_show name="byakuya" face="akire" time="0" x="900"]
 [chara_show name="mamo" time="0"]
 [layopt layer="message0" visible="true"]
+[fadeinbgm storage="10kamenbutoukai.mp3"]
 [chara_off]
 
 #byakuya
@@ -1417,7 +1379,7 @@
 [m_message]
 #mamo
 紹介が遅れたネ。[r]
-ボクの名前は[font color="#ed1a3d]翼亡ぼ[ruby text="マ"]し[ruby text="ー"]欲[ruby text="モ"]望の悪魔[font color="#ffff]。[p]
+ボクの名前は[font color="#ed1a3d"]翼亡ぼ[ruby text="マ"]し[ruby text="ー"]欲[ruby text="モ"]望の悪魔[font color="#ffff"]。[p]
 
 #mamo
 ソレデ、キミの名前ハ？[p]
@@ -1460,8 +1422,8 @@
 
 [normal_message]
 #byakuya
-……質問って、それか。[r]
-僕は月食白夜。えーと、これでいいのか？[p]
+質問って、それか。[r]
+僕の名前は月食白夜。……えーと、これでいいのか？[p]
 
 [m_message]
 #mamo
@@ -1484,10 +1446,12 @@
 それで概ね大丈夫ダ。手から火を出したり空を飛んだリ、[r]
 特別な力デ、超科学的な事象を実現させル。ソレが魔法ダ。[p]
 
+
 [normal_message]
 [b_sin]
+
 #byakuya
-契約って言ってたな。[r]
+…………。契約って言ってたな。[r]
 魔法を使えるとして、そのために僕は何をすればいい？[p]
 
 [m_message]
@@ -1543,6 +1507,16 @@
 タダシ、ボクと契約してくれればダガ。[r]
 クククッ……ククッ。[p]
 
+#mamo
+断言シヨウ。[r]
+キミには魔法使いになる才能がアル！[p]
+
+
+#mamo
+秀でた才を持つ者は、[r]
+ソノ才能を活用しないと勿体ないゼ？[p]
+
+
 [normal_message]
 #byakuya
 ……………………………………。[r]
@@ -1566,7 +1540,7 @@
 [chara_show name="mamo" time="0"]
 [layopt layer="0" visible="true"]
 [bg storage="heya_sonota.png"]
-[mask_off time="500"]
+[mask_off time="100"]
 #byakuya
 （きっとこっちを騙しているんだ……、[r]
 何か……、怪しい部分は絶対にある……はずなんだ）[p]
@@ -1574,15 +1548,16 @@
 [chara_hide_all time="0"] 
 [layopt layer="0" visible="true"]
 [bg storage="dark.jpg"]
-[mask_off time="500"]
+[mask_off time="10"]
 #hutatsu
 「……お前よりも、曙さんの方が早く解決出来るとしても？」[p]
 
 [mask effect="fadeIn" time="600"]
-[chara_show name="byakuya" face="kanasimi" time="0"]
+[chara_show name="byakuya" face="kanasimi" time="0" left="600"]
 [chara_show name="mamo"]
 [layopt layer="0" visible="true"]
 [bg storage="heya4_4.png"]
+[fadeoutbgm]
 [mask_off time="500"]
 #byakuya
 ……………………………………[p]

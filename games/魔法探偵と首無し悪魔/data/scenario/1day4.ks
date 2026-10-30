@@ -1,11 +1,17 @@
 
 [chara_in]
 [bg storage="2_4.png" ]
+[freeimage layer="1"]
+[freeimage layer="2"]
+[layopt layer="message0" visible="true"]
 [chara_show name="byakuya" face="akire" time="0"]
 [chara_part name="byakuya" mamo="nashi"]
+[stopbgm]
 [normal_message]
+[add_theme_button]
 [chara_off]
 
+[fadeinbgm storage="05makuma.mp3"]
 [chara_show name="akebono" ]
 #akebono
 あれ、白夜クンじゃないか。[r]
@@ -58,7 +64,6 @@ f.a_suiri=0;
 
 [glink graphic="select_button_B.png" target=*akebono1 text="大学時代の掠さんについて" enterimg="select_button_B_active.png"  size="20" x="250" y="200" width="680" height="10"]
 [glink graphic="select_button_B.png" target=*akebono2 text="「のぞみさん」について" enterimg="select_button_B_active.png" size="20" x="250" y="280" width="680" height="10"] 
-[glink graphic="select_button_B.png" target=*akebono3 text="「小望臨」について" enterimg="select_button_B_active.png" size="20" x="250" y="360" width="680" height="10"]    
 [s]
 
 *akebono1
@@ -218,9 +223,11 @@ f.a_suiri=0;
 警察の仕事をしているとね。[p]
 
 
+[stopbgm]
 [mask time="10" color="#ffff"]
 [chara_hide_all time="0" layer="1"]
 [layopt layer="2" visible="true"]
+[playse storage="hirameku.mp3"]
 [image layer="2" storage="b_kattoin.png" visible="true" x="-300" y="-100" wait="true" time="0" width="1920" height="652"]
 [mask_off time="10"]
 [wait time="1000"]
@@ -260,11 +267,11 @@ f.a_suiri=0;
 [filter layer="base" blur="5"]
 [anim name="hannin" left="+=3300" time="400"]
 
-[glink color="bth01" text="「実は、掠さんは前から知ってたんだ」" x="-700" y="150" width="600" height="100" name="mujun1" target="**atalk2"]
+[glink color="bth01" text="「実は、掠さんは前から知ってたんだ」" x="-700" y="150" width="600" height="100" name="mujun1" target="**a_talk2"]
 
-[glink color="bth01" text="「私のお母さんと掠さんが知り合いだったの」" x="1980" y="300" width="600" height="100" name="mujun2" target="*atalk2"]
+[glink color="bth01" text="「私のお母さんと掠さんが知り合いだったの」" x="1980" y="300" width="600" height="100" name="mujun2" target="*a_talk2"]
 
-[glink color="bth01" text="「ずっと遠い場所でお母さんと暮らしてた」" x="-700" y="450" width="600" height="100" name="mujun3" target="*atalk1"]
+[glink color="bth01" text="「ずっと遠い場所でお母さんと暮らしてた」" x="-700" y="450" width="600" height="100" name="mujun3" target="*a_talk1"]
 
 [wait time="100"]
 
@@ -319,7 +326,7 @@ f.a_suiri=0;
 だが、小望さんは子供を産んだ後、[r]
 ここ以外の地域で暮らしていたんだ！[p]
 
-[chara_show name="akebono" ]
+[chara_show name="akebono"]
 #akebono
 …………………………[r]
 確かに、それは明らかな矛盾だね。[p]
@@ -339,10 +346,11 @@ f.a_suiri=0;
 #akebono
 あの人の子供なんて、生きている訳がないんだよ！[p]
 
-[chara_show name="byakuya" face="sinken"]
+
+[fadeinbgm storage="syukuteki.mp3"]
 #byakuya
-…………語るに落ちたな。[r]
-喋れば喋るほど、矛盾が増えるぞ。[p]
+…………語るに落ちたなクソ親父！[r]
+口を開いた数だけ、矛盾が増えているぞ！[p]
 
 
 [a_kan]
@@ -474,12 +482,13 @@ f.a_suiri=0;
 [layopt layer="fix" visible="true"]
 [freeimage layer="2"]
 [layopt layer="0" ]
+[chara_show name="byakuya" face="kanasimi2"]
 [chara_show name="akebono" face="akire"]
 [chara_off]
 #akebono
 …………？[p]
 
-[chara_show name="byakuya" face="kanasimi2"]
+
 #byakuya
 …………？　あ、あれ……？　何か反応してよ。[p]
 
@@ -502,6 +511,7 @@ f.a_suiri=0;
 [layopt layer="0" ]
 [freeimage layer="2"]
 [chara_show name="byakuya" face="sinken"]
+[chara_show name="akebono" face="kanasimi"]
 [chara_off]
 #byakuya
 お前は、小望さんが結婚した以降のことは[r]
@@ -511,6 +521,7 @@ f.a_suiri=0;
 それなのに、「心中をした」だと？[r]
 どうしてそんな事まで知ってるんだ？[p]
 
+[fadeoutbgm]
 #akebono
 ……………………………………[l][r]
 ……ごめん、隠していたことがあるんだ。[p]
@@ -522,13 +533,18 @@ f.a_suiri=0;
 #byakuya
 掠さんの？　……一体、どんなことだよ。[p]
 
+[fadeinbgm storage="02kataru.mp3"]
 #akebono
 ……掠と小望さんは、交際をしていた。[r]
 それだけなら問題は無かった。[p]
 
 #akebono
-掠は、中絶させようとした……、[r]
-だが、小望さんは産むと言ってきかなかった。[p]
+ただ、ある日問題は起きた。[r]
+小望さんに子供が出来てしまったんだ。[p]
+
+#akebono
+当然、掠は中絶させようとした……、[r]
+だが、小望さんはそれを了承しなかった。[p]
 
 [a_no]
 #akebono
@@ -551,7 +567,6 @@ f.a_suiri=0;
 掠はその子達を自分の子供だと認めなかった。[r]
 ……そして、見るに堪えない言い争いが数時間続いた。[p]
 
-
 #akebono
 ……結局、掠は最後まで認めなかった。[r]
 小望さんは、諦めて帰ったよ。[p]
@@ -562,8 +577,9 @@ f.a_suiri=0;
 [a_no]
 #akebono
 これで話は終わりだよ。[r]
-……僕が君にこのことを隠そうとした理由も分かるだろ？[r]
+……僕が君にこのことを隠そうとした理由も分かるだろ？[p]
 
+[fadeoutbgm time="500"]
 [b_kan]
 #byakuya
 ……そ、そんなの…………[r]
@@ -572,6 +588,7 @@ f.a_suiri=0;
 #akebono
 ？[p]
 
+[fadeinbgm storage="07hodoku.mp3"]
 [b_ika]
 #byakuya
 その話じゃ……！[r]
@@ -626,7 +643,7 @@ f.a_suiri=0;
 
 #akebono
 だとしたら、僕に対して[r]
-正義を問う必要がどこにある？[r]
+正義を問う必要がどこにある？[p]
 
 #akebono
 ……君が望むは、「事件の解決」だ。[r]

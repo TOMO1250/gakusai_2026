@@ -13,16 +13,24 @@
     };
 
     $.isHTTP = function (str) {
-        if ($.isBase64(str)) {
-            return true;
+
+        try {
+            if ($.isBase64(str)) {
+                return true;
+            }
+
+            if (str.substring(0, 4) === "http" || str.substring(0, 4) === "file" || str.substring(0, 6) === "./data" || str.substring(0, 1) === "/" || str.substring(1, 2) === ":") {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (e) {
+            console.log(e)
         }
 
-        if (str.substring(0, 4) === "http") {
-            return true;
-        } else {
-            return false;
-        }
+        return false;
     };
+
 
     $.play_audio = function (audio_obj) {
         audio_obj.play();
@@ -58,7 +66,7 @@
     };
 
     $.localFilePath = function () {
-        
+
         var path = "";
         //Mac os Sierra 対応
         if (process.execPath.indexOf("var/folders") != -1) {
@@ -329,6 +337,10 @@
 
     //確証しを取得
     $.getExt = function (str) {
+
+        var questionMarkIndex = str.indexOf('?');
+        var str = questionMarkIndex !== -1 ? str.substring(0, questionMarkIndex) : str;
+
         return str.split(".").pop();
     };
 
@@ -357,7 +369,7 @@
     };
 
     //パスにfgimage bgimage image が含まれていた場合、それを適応する
-    $.convertStorage = function (path) {};
+    $.convertStorage = function (path) { };
 
     $.convertColor = function (val) {
         if (val.indexOf("0x") != -1) {
@@ -405,13 +417,26 @@
         });
     };
 
-    $.loadText = function (file_path, callback) {
+    $.loadText = function (file_path, callback, flag_disabled_cache = true) {
+
         if (window.TYRANO) window.TYRANO.kag.showLoadingLog();
 
+        let dataType = "text";
+
+        if ($.getExt(file_path) == "json") {
+            dataType = "json";
+        }
+
+        //キャッシュが
+        let flag_cache = true;
+        if (flag_disabled_cache == true) {
+            flag_cache = false;
+        }
+
         $.ajax({
-            url: file_path + "?" + Math.floor(Math.random() * 1000000),
-            dataType: 'text',
-            cache: false,
+            url: file_path,
+            dataType: dataType,
+            cache: flag_cache,
             success: function (text) {
                 if (window.TYRANO) window.TYRANO.kag.hideLoadingLog();
                 const order_str = text;
@@ -426,10 +451,17 @@
     };
 
     $.loadTextSync = function (file_path) {
+
+        let dataType = "text";
+
+        if ($.getExt(file_path) == "json") {
+            dataType = "json";
+        }
+
         return new Promise((resolve, reject) => {
             $.ajax({
                 url: file_path + "?" + Math.floor(Math.random() * 1000000),
-                dataType: 'text',
+                dataType: dataType,
                 cache: false,
                 success: function (text) {
                     if (window.TYRANO) window.TYRANO.kag.hideLoadingLog();
@@ -477,7 +509,9 @@
         var ua = navigator.userAgent;
         if (ua.indexOf("iPhone") > -1) {
             return "iphone";
-        } else if (ua.indexOf("iPad") > -1) {
+        } else if (ua.indexOf("iPad") > -1 ||
+            (ua.indexOf("Macintosh") > -1 && navigator.maxTouchPoints > 1)
+        ) {
             return "iphone";
         } else if (ua.indexOf("Android") > -1) {
             return "android";
@@ -980,20 +1014,20 @@
 
         return { filename: filename, ext: ext, name: name, dir_name: dir_name };
     };
-    
+
     //getExePathのキャッシュ
     $.cacheExePath = "";
-    
+
     //PC用の実行パスを取得
     $.getExePath = function () {
-        
+
         if ($.cacheExePath != "") {
             return $.cacheExePath;
         }
-        
+
         //TyranoStudio.app/Contents/Resources/app
         let path = window.studio_api.ipcRenderer.sendSync("getAppPath", {});
-        
+
         let platform = "";
         //alert(process.platform);
         //console.log(process.platform)
@@ -1016,7 +1050,7 @@
                 path = $.replaceAll(path, "\\resources\\app", "");
             }
         }
-        
+
         $.cacheExePath = path;
 
         return path;
@@ -1047,7 +1081,7 @@
             }
             const file_path = out_path + "/" + key + ".sav";
             fs.unlinkSync(file_path);
-        } catch (e) {}
+        } catch (e) { }
     };
 
     $.setStorageFile = function (key, val) {
@@ -1085,7 +1119,7 @@
             }
 
             if (fs.existsSync(out_path + "/" + key + ".sav")) {
-                var str = fs.readFileSync(out_path + "/" + key + ".sav","utf8");
+                var str = fs.readFileSync(out_path + "/" + key + ".sav", "utf8");
                 gv = unescape(str);
             } else {
                 //Fileが存在しない場合にローカルストレージから読み取る使用は破棄。

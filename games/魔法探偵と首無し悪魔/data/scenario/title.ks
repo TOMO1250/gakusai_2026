@@ -3,8 +3,9 @@
 ;タイトル画面の背景を表示
 [bg storage="title.png" time=100]
 
-[glink color="bth01" text="はじめから"x=160 y=300 target=*start]
-[glink  color="bth01" text="つづきから"x=160 y=400 target=*load]
+[fadeinbgm storage="02kataru.mp3"]
+[button graphic="title_button_newgame.png" x=130 y=270 target=*start enterimg="title_button_newgame_hover.png"]
+[button graphic="title_button_loadgame.png"x=130 y=370 target=*load enterimg="title_button_loadgame_hover.png"]
 
 [s]
 

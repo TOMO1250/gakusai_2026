@@ -156,7 +156,7 @@
 [endmacro]
 
 [macro name="u_no"]
- [chara_mod name="hutatsu" face="usagi"]
+ [chara_mod name="usagi" face="normal"]
 [endmacro]
 
 [macro name="u_yo"]
@@ -203,11 +203,14 @@
 
 ;キャラ転換
 [macro name="chara_in"]
+ [playse storage="kousoku.mp3"]
  [mask  graphic="hide_anim.png" effect="fadeInRight" time="600"]
 [endmacro]
 
 [macro name="chara_off"]
+ [playse storage="kousoku.mp3"]
  [mask_off effect="fadeOutLeft" time="600"]
+
 [endmacro]
 
 ;メッセージウィンドウ
@@ -226,5 +229,7 @@
  [anim layer="message0" time="600" opacity="255"]
  [resetfont]
 [endmacro]
+
+[popopo]
 
 [return] 

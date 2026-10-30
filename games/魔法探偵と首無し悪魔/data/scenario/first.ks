@@ -14,5 +14,6 @@
 ;自動ルビプラグインを読み込む
 [plugin name="auto_ruby"]
 
+
 ;タイトル画面にジャンプ
 [jump storage="title.ks"]
