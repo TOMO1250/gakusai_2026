@@ -270,6 +270,9 @@ main{max-width:1250px}
 }
 
 /* PDF作品表示 */
+.illustration-open .pdf-page-canvas{display:block;width:100%;height:auto;max-height:360px;object-fit:contain;background:#fff}
+.illustration-open .pdf-thumbnail{min-height:180px}
+
 .pdf-thumbnail{display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;width:100%;aspect-ratio:4/3;background:#eef2ff;color:#3730a3;font-weight:700}
 .pdf-thumbnail .pdf-symbol{font-size:3.2rem;line-height:1}
 .modal-content .pdf-viewer{display:none;width:min(78vw,1000px);height:72vh;border:0;background:white;border-radius:6px}
@@ -779,6 +782,41 @@ document.addEventListener('keydown', function(event) {
     }
 });
 
+// PDF.jsでPDFの1ページ目をサムネイルとして描画する。
+// 読み込みに失敗した場合は従来のPDFアイコンを残す。
+const pdfThumbnailObserver = ('IntersectionObserver' in window)
+  ? new IntersectionObserver(entries => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) {
+          pdfThumbnailObserver.unobserve(entry.target);
+          const job = entry.target._renderPdfThumbnail;
+          if (job) job();
+        }
+      }
+    }, {rootMargin:'300px'}) : null;
+
+async function renderPdfThumbnail(path, button, placeholder) {
+    try {
+        if (!window.pdfjsLib) throw new Error('PDF.jsを読み込めませんでした');
+        const loadingTask = pdfjsLib.getDocument({url: encodeURI(path)});
+        const pdf = await loadingTask.promise;
+        const page = await pdf.getPage(1);
+        const base = page.getViewport({scale:1});
+        const scale = Math.min(2, 700 / base.width);
+        const viewport = page.getViewport({scale});
+        const canvas = document.createElement('canvas');
+        canvas.className = 'pdf-page-canvas';
+        canvas.width = Math.ceil(viewport.width);
+        canvas.height = Math.ceil(viewport.height);
+        canvas.setAttribute('aria-label', 'PDFの1ページ目');
+        await page.render({canvasContext:canvas.getContext('2d'),viewport}).promise;
+        if (button.isConnected) placeholder.replaceWith(canvas);
+        pdf.destroy();
+    } catch (error) {
+        console.warn('PDFサムネイル表示失敗:', path, error);
+    }
+}
+
 // イラスト一覧を表示する
 function renderIllustrations() {
     const q = document.getElementById('illustration-search')
@@ -815,6 +853,10 @@ function renderIllustrations() {
             const thumb = el('div', 'pdf-thumbnail');
             thumb.append(el('span', 'pdf-symbol', '📄'), el('span', '', 'PDF作品を見る'));
             button.append(thumb);
+            const path = illustrationPath(item);
+            button._renderPdfThumbnail = () => renderPdfThumbnail(path, button, thumb);
+            if (pdfThumbnailObserver) pdfThumbnailObserver.observe(button);
+            else button._renderPdfThumbnail();
         } else {
             const img = el('img');
             img.src = encodeURI(illustrationPath(item));
@@ -841,5 +883,8 @@ function renderIllustrations() {
 }
 document.querySelectorAll('.category-button').forEach(button=>button.addEventListener('click',()=>{document.querySelectorAll('.category-button').forEach(b=>{const active=b===button;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));});document.querySelectorAll('.section').forEach(section=>section.hidden=section.id!==button.dataset.section);window.scrollTo({top:0,behavior:'instant'});}));document.getElementById('search').addEventListener('input',renderGames);document.getElementById('closeModal').addEventListener('click',()=>modal.close());modal.addEventListener('click',event=>{if(event.target===modal)modal.close();});renderGames();document.getElementById('music-search').addEventListener('input',()=>renderLinks(musics,'musics','music-search','music-count'));document.getElementById('video-search').addEventListener('input',()=>renderLinks(videos,'videos','video-search','video-count'));document.getElementById('illustration-search').addEventListener('input',renderIllustrations);renderLinks(musics,'musics','music-search','music-count');renderLinks(videos,'videos','video-search','video-count');renderIllustrations();
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"
+        onload="pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js'; renderIllustrations();"
+        onerror="console.warn('PDF.jsの読み込みに失敗しました。PDFアイコン表示を継続します。')"></script>
 </body>
 </html>
