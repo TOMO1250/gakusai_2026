@@ -133,10 +133,14 @@ main{max-width:1250px}
 
 /* ゲーム画像 */
 #games .game-image {
-  width: 90px;
-  height: 90px;
-  border-radius: 9px;
+    width: 120px;
+    height: auto;
+    max-height: 160px;
+    object-fit: contain;
+    border-radius: 9px;
+    flex-shrink: 0;
 }
+
 
 /* 画像の右側 */
 #games .game-info {
