@@ -23,6 +23,7 @@
         <div id="unity-build-title">CardGame</div>
       </div>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <script>
       var canvas = document.querySelector("#unity-canvas");
 
@@ -56,7 +57,7 @@
       var config = {
         autoSyncPersistentDataPath: true,
         arguments: [],
-        dataUrl: buildUrl + "/WebGL.data",
+        dataUrl: "", // ZIPから展開したBlob URLを後で設定
         frameworkUrl: buildUrl + "/WebGL.framework.js",
         codeUrl: buildUrl + "/WebGL.wasm",
         streamingAssetsUrl: "StreamingAssets",
@@ -111,23 +112,55 @@
 
       document.querySelector("#unity-loading-bar").style.display = "block";
 
-      var script = document.createElement("script");
-      script.src = loaderUrl;
-      script.onload = () => {
-        createUnityInstance(canvas, config, (progress) => {
-          document.querySelector("#unity-progress-bar-full").style.width = 100 * progress + "%";
-              }).then((unityInstance) => {
-                document.querySelector("#unity-loading-bar").style.display = "none";
-                document.querySelector("#unity-fullscreen-button").onclick = () => {
-                  unityInstance.SetFullscreen(1);
-                };
+      // GitHub Pages cannot serve an uncompressed WebGL.data over 100 MB.
+      // Fetch the smaller ZIP and expand WebGL.data in the browser.
+      const loadingBar = document.querySelector("#unity-loading-bar");
+      const progressBar = document.querySelector("#unity-progress-bar-full");
+      const status = document.createElement("p");
+      status.style.cssText = "color:white;text-align:center;font:14px sans-serif;margin-top:12px";
+      status.textContent = "ゲームデータを準備しています…";
+      loadingBar.appendChild(status);
+      let dataBlobUrl = null;
 
-              }).catch((message) => {
-                alert(message);
-              });
-            };
-
-      document.body.appendChild(script);
+      async function startGame() {
+        try {
+          if (!window.JSZip) throw new Error("ZIP展開ライブラリを読み込めませんでした。インターネット接続を確認してください。");
+          status.textContent = "ゲームデータ（ZIP）をダウンロードしています…";
+          const response = await fetch(buildUrl + "/WebGL.zip");
+          if (!response.ok) throw new Error("WebGL.zip HTTP " + response.status);
+          const archive = await response.arrayBuffer();
+          status.textContent = "ゲームデータを展開しています…（少し時間がかかります）";
+          const zip = await JSZip.loadAsync(archive);
+          const dataEntry = zip.file("WebGL.data");
+          if (!dataEntry) throw new Error("ZIP内にWebGL.dataがありません");
+          const dataBlob = await dataEntry.async("blob");
+          dataBlobUrl = URL.createObjectURL(dataBlob);
+          config.dataUrl = dataBlobUrl;
+          status.textContent = "Unityを起動しています…";
+          const script = document.createElement("script");
+          script.src = loaderUrl;
+          script.onerror = () => { status.textContent = "Unity loaderを読み込めませんでした"; };
+          script.onload = () => {
+            createUnityInstance(canvas, config, (progress) => {
+              progressBar.style.width = (100 * progress) + "%";
+            }).then((unityInstance) => {
+              loadingBar.style.display = "none";
+              document.querySelector("#unity-fullscreen-button").onclick = () => {
+                unityInstance.SetFullscreen(1);
+              };
+              // Keep Blob URL alive for the full Unity startup/lifetime.
+            }).catch((error) => {
+              status.textContent = "Unity起動エラー: " + error;
+              console.error(error);
+            });
+          };
+          document.body.appendChild(script);
+        } catch (error) {
+          status.textContent = "読み込み失敗: " + error.message;
+          console.error(error);
+        }
+      }
+      startGame();
 
     </script>
   </body>
