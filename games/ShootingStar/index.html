@@ -9,7 +9,7 @@
   </head>
   <body>
     <div id="unity-container" class="unity-desktop">
-      <canvas id="unity-canvas" width=960 height=540 tabindex="-1"></canvas>
+      <canvas id="unity-canvas" width=960 height=600 tabindex="-1"></canvas>
       <div id="unity-loading-bar">
         <div id="unity-logo"></div>
         <div id="unity-progress-bar-empty">
@@ -57,11 +57,11 @@
       }
 
       var buildUrl = "Build";
-      var loaderUrl = buildUrl + "/2026学祭.loader.js";
+      var loaderUrl = buildUrl + "/ver2.loader.js";
       var config = {
-        dataUrl: buildUrl + "/2026学祭.data",
-        frameworkUrl: buildUrl + "/2026学祭.framework.js",
-        codeUrl: buildUrl + "/2026学祭.wasm",
+        dataUrl: buildUrl + "/ver2.data",
+        frameworkUrl: buildUrl + "/ver2.framework.js",
+        codeUrl: buildUrl + "/ver2.wasm",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "DefaultCompany",
         productName: "ShootingStar",
@@ -95,7 +95,7 @@
         // Desktop style: Render the game canvas in a window that can be maximized to fullscreen:
 
         canvas.style.width = "960px";
-        canvas.style.height = "540px";
+        canvas.style.height = "600px";
       }
 
       loadingBar.style.display = "block";
