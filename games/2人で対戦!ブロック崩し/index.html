@@ -6,6 +6,61 @@
     <title>Unity Web Player | Block Kuzusi Vs</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XT2PBT71LP"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-XT2PBT71LP');
+
+      const gaWorkTitle = 'Block Kuzusi Vs';
+      const gaWorkCategory = 'game';
+      const gaWorkParams = { work_title: gaWorkTitle, work_category: gaWorkCategory };
+      let gaVisibleSince = document.visibilityState === 'visible' ? performance.now() : null;
+      let gaVisibleMs = 0;
+      let gaLastFlush = performance.now();
+
+      function gaTrack(eventName, params = {}) {
+        gtag('event', eventName, { ...gaWorkParams, ...params });
+      }
+
+      // Accumulate only time while the tab is visible.
+      function gaAccumulateVisible() {
+        const now = performance.now();
+        if (gaVisibleSince !== null) {
+          gaVisibleMs += Math.max(0, now - gaVisibleSince);
+          gaVisibleSince = now;
+        }
+      }
+
+      // Report elapsed visible time as separate intervals, not a running total.
+      function gaFlushVisibleTime() {
+        gaAccumulateVisible();
+        const seconds = Math.floor(gaVisibleMs / 1000);
+        if (seconds > 0) {
+          gaTrack('game_view_time', { duration_seconds: seconds });
+          gaVisibleMs -= seconds * 1000;
+        }
+      }
+
+      document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'hidden') {
+          gaFlushVisibleTime();
+          gaVisibleSince = null;
+        } else {
+          gaVisibleSince = performance.now();
+        }
+      });
+      window.addEventListener('pagehide', () => {
+        gaFlushVisibleTime();
+        gaVisibleSince = null;
+      });
+      setInterval(() => {
+        if (document.visibilityState === 'visible') gaFlushVisibleTime();
+      }, 15000);
+      // page_view is sent automatically by the GA4 config above.
+    </script>
   </head>
   <body>
     <div id="unity-container" class="unity-desktop">
@@ -117,6 +172,7 @@
           document.querySelector("#unity-progress-bar-full").style.width = 100 * progress + "%";
               }).then((unityInstance) => {
                 document.querySelector("#unity-loading-bar").style.display = "none";
+                gaTrack('game_load');
                 document.querySelector("#unity-fullscreen-button").onclick = () => {
                   unityInstance.SetFullscreen(1);
                 };
