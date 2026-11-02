@@ -357,7 +357,7 @@ main{max-width:1250px}
 </div>
 
 </div></section>
-<section id="music-section" class="section" hidden><div class="section-layout"><div class="left-sidebar"><aside class="guide"><h3>ご利用案内</h3><p>作品の再生ボタンを押してください。音量はプレイヤーで調整できます。</p></aside>
+<section id="music-section" class="section" hidden><div class="section-layout"><div class="left-sidebar"><aside class="guide"><h3>ご利用案内</h3><p>作品の再生ボタンを押してください。YouTube作品はリンクから新しいタブで開きます。</p></aside>
 <aside class="guide survey-guide">
     <h3>来場者アンケート</h3>
     <p>展示の感想をお聞かせください！</p>
@@ -372,7 +372,7 @@ main{max-width:1250px}
 </div>
 
 </div></section>
-<section id="video-section" class="section" hidden><div class="section-layout"><div class="left-sidebar"><aside class="guide"><h3>ご利用案内</h3><p>作品の再生ボタンを押してください。音量はプレイヤーで調整できます。</p></aside>
+<section id="video-section" class="section" hidden><div class="section-layout"><div class="left-sidebar"><aside class="guide"><h3>ご利用案内</h3><p>リンクを左クリックしてください。視聴終了の際はタブを閉じてください。</p></aside>
 <aside class="guide survey-guide">
     <h3>来場者アンケート</h3>
     <p>展示の感想をお聞かせください！</p>
@@ -712,16 +712,16 @@ const games = [
 
 
 // 音楽ファイルは index.html と並列の musics フォルダに配置します。
-// 動画ファイルは index.html と並列の videos フォルダに配置します。
-// ファイル名を変更した場合は src も変更してください。
+// 音楽: src は musics 内のMP3、url はYouTubeなどの外部リンクです。
+// 動画: YouTubeのURLを url に指定します。
 const musics = [
   {title:"始まり",author:"よーき",src:"musics/始まり.mp3"},
   {title:"晴零",author:"よーき",src:"musics/晴零.mp3"},
   {title:"忙しい人のためのバラード",author:"よーき",src:"musics/忙しい人のためのバラード.mp3"},
 ];
 const videos = [
-  {title:"動画班製作作品:マウスちゃんの色を探す物語",author:"動画班",src:"videos/マウスちゃんの色を探す物語.mp4"},
-  {title:"前方で流している動画",author:"",src:"videos/前方で流している動画.mp4"},
+  {title:"動画班製作作品:マウスちゃんの色を探す物語",author:"動画班",url:"https://youtu.be/RaigjjwN6xg"},
+  {title:"前方で流している動画",author:"",url:"https://www.youtube.com/watch?v=c5DUgQfJd1w"},
 ];
 const illustrations = [
   {title:"トリックオアトリート！",author:"アイス",image:"images/illustrations/S__77094920.jpg"},
@@ -847,6 +847,8 @@ function renderGames() {
   }
 }
 
+// 音楽はMP3のページ内再生と外部リンクの両方に対応。
+// 動画はYouTubeのリンクを新しいタブで開く。
 function renderMedia(items, id, searchId, countId, kind) {
   const q = document.getElementById(searchId).value.trim().toLocaleLowerCase();
   const filtered = items.filter(item => [item.title, item.author].some(v => v.toLocaleLowerCase().includes(q)));
@@ -859,14 +861,21 @@ function renderMedia(items, id, searchId, countId, kind) {
   }
   for (const item of filtered) {
     const card = makeCard(item.title, item.author);
-    const player = document.createElement(kind === 'music' ? 'audio' : 'video');
-    player.className = kind === 'music' ? 'local-audio' : 'local-video';
-    player.controls = true;
-    player.preload = 'metadata';
-    player.src = encodeURI(item.src);
-    player.setAttribute('aria-label', `${item.title}を再生`);
-    player.append(document.createTextNode('このブラウザでは再生できません。'));
-    card.append(player);
+    if (kind === 'music' && item.src) {
+      const player = document.createElement('audio');
+      player.className = 'local-audio';
+      player.controls = true;
+      player.preload = 'metadata';
+      player.src = encodeURI(item.src);
+      player.setAttribute('aria-label', `${item.title}を再生`);
+      player.append(document.createTextNode('このブラウザでは再生できません。'));
+      card.append(player);
+    }
+    if (item.url) {
+      const link = makeLink(item.url);
+      link.textContent = kind === 'music' ? 'YouTubeで聴く（新しいタブ）' : 'YouTubeで視聴する（新しいタブ）';
+      card.append(link);
+    }
     container.append(card);
   }
 }
